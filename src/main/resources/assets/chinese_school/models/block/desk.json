@@ -2,7 +2,8 @@
   "parent": "minecraft:block/block",
   "textures": {
     "particle": "chinese_school:block/desk",
-    "wood": "chinese_school:block/desk"
+    "wood": "chinese_school:block/desk",
+    "metal": "chinese_school:block/desk_metal"
   },
   "elements": [
     {
@@ -348,67 +349,271 @@
     {
       "from": [
         3,
-        2,
-        1
+        6,
+        3
+      ],
+      "to": [
+        13,
+        7,
+        15
+      ],
+      "faces": {
+        "down": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            3,
+            13,
+            15
+          ]
+        },
+        "up": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            3,
+            13,
+            15
+          ]
+        },
+        "north": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            9,
+            13,
+            10
+          ]
+        },
+        "south": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            9,
+            13,
+            10
+          ]
+        },
+        "east": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            9,
+            15,
+            10
+          ]
+        },
+        "west": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            9,
+            15,
+            10
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        7,
+        13
       ],
       "to": [
         13,
         14,
-        3
+        15
       ],
       "faces": {
         "down": {
-          "texture": "#wood",
+          "texture": "#metal",
           "uv": [
             3,
-            1,
             13,
-            3
+            13,
+            15
           ]
         },
         "up": {
-          "texture": "#wood",
+          "texture": "#metal",
           "uv": [
             3,
-            1,
             13,
-            3
+            13,
+            15
           ]
         },
         "north": {
-          "texture": "#wood",
+          "texture": "#metal",
           "uv": [
             3,
             2,
             13,
-            14
+            9
           ]
         },
         "south": {
-          "texture": "#wood",
+          "texture": "#metal",
           "uv": [
             3,
             2,
             13,
-            14
+            9
           ]
         },
         "east": {
-          "texture": "#wood",
+          "texture": "#metal",
           "uv": [
-            1,
+            13,
             2,
-            3,
-            14
+            15,
+            9
           ]
         },
         "west": {
-          "texture": "#wood",
+          "texture": "#metal",
           "uv": [
-            1,
+            13,
             2,
+            15,
+            9
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        7,
+        3
+      ],
+      "to": [
+        4,
+        14,
+        13
+      ],
+      "faces": {
+        "down": {
+          "texture": "#metal",
+          "uv": [
             3,
-            14
+            3,
+            4,
+            13
+          ]
+        },
+        "up": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            3,
+            4,
+            13
+          ]
+        },
+        "north": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            2,
+            4,
+            9
+          ]
+        },
+        "south": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            2,
+            4,
+            9
+          ]
+        },
+        "east": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            2,
+            13,
+            9
+          ]
+        },
+        "west": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            2,
+            13,
+            9
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        12,
+        7,
+        3
+      ],
+      "to": [
+        13,
+        14,
+        13
+      ],
+      "faces": {
+        "down": {
+          "texture": "#metal",
+          "uv": [
+            12,
+            3,
+            13,
+            13
+          ]
+        },
+        "up": {
+          "texture": "#metal",
+          "uv": [
+            12,
+            3,
+            13,
+            13
+          ]
+        },
+        "north": {
+          "texture": "#metal",
+          "uv": [
+            12,
+            2,
+            13,
+            9
+          ]
+        },
+        "south": {
+          "texture": "#metal",
+          "uv": [
+            12,
+            2,
+            13,
+            9
+          ]
+        },
+        "east": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            2,
+            13,
+            9
+          ]
+        },
+        "west": {
+          "texture": "#metal",
+          "uv": [
+            3,
+            2,
+            13,
+            9
           ]
         }
       }
