@@ -1,6 +1,8 @@
 package com.cr400bf5033.chineseschool.registry;
 
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
+import net.minecraft.world.item.BlockItem;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
@@ -12,11 +14,15 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  *         ITEMS.registerSimpleItem("notebook", p -> p.stacksTo(16));
  * }</pre>
  *
- * <p>方块物品用 {@code ITEMS.registerSimpleBlockItem(name, block)} 注册。</p>
+ * <p>方块对应的物品形式用 {@code ITEMS.registerItem(name, p -> new BlockItem(block, p))} 注册。</p>
  */
 public final class ModItems {
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ChineseSchoolMod.MOD_ID);
+
+    /** 课桌的物品形式。 */
+    public static final DeferredItem<BlockItem> DESK = ITEMS.registerItem("desk",
+            properties -> new BlockItem(ModBlocks.DESK.get(), properties));
 
     private ModItems() {
     }

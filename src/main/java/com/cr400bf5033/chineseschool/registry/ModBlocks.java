@@ -1,6 +1,11 @@
 package com.cr400bf5033.chineseschool.registry;
 
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
+import com.cr400bf5033.chineseschool.block.DeskBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
@@ -12,11 +17,18 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  *         BLOCKS.registerSimpleBlock("school_bell", p -> p.mapColor(MapColor.GOLD));
  * }</pre>
  *
- * <p>如果需要对应的物品形式，请在 {@link ModItems} 中用 {@code registerSimpleBlockItem} 注册。</p>
+ * <p>需要物品形式时，在 {@link ModItems} 中注册对应的 {@code BlockItem}。</p>
  */
 public final class ModBlocks {
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ChineseSchoolMod.MOD_ID);
+
+    /** 课桌：可朝向、可存放 9 格物品。 */
+    public static final DeferredBlock<DeskBlock> DESK = BLOCKS.registerBlock("desk", DeskBlock::new,
+            properties -> properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD));
 
     private ModBlocks() {
     }

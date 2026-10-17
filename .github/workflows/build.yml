@@ -23,3 +23,10 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Upload mod jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: chinese_school-mod
+          path: build/libs/*.jar
+          if-no-files-found: error

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "desk",
+  "key": {
+    "P": "#minecraft:planks",
+    "I": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "PPP",
+    " I ",
+    "III"
+  ],
+  "result": {
+    "id": "chinese_school:desk",
+    "count": 1
+  }
+}

@@ -1,3 +1,5 @@
 {
-  "itemGroup.chinese_school.main": "中式学校"
+  "itemGroup.chinese_school.main": "中式学校",
+  "block.chinese_school.desk": "课桌",
+  "container.chinese_school.desk": "课桌"
 }

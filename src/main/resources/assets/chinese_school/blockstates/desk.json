@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "chinese_school:block/desk",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "chinese_school:block/desk"
+    },
+    "facing=south": {
+      "model": "chinese_school:block/desk",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "chinese_school:block/desk",
+      "y": 270
+    }
+  }
+}
