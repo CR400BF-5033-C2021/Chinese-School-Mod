@@ -84,3 +84,4 @@ src/main/resources/data/chinese_school/        配方、战利品表
 
 - 模组元数据中的版本号、作者等信息统一由 `gradle.properties` 提供，无需直接修改 TOML 文件。
 - 本仓库使用 [ModDevGradle](https://github.com/neoforged/moddevgradle) 插件；官方模板见 [NeoForgeMDKs](https://github.com/NeoForgeMDKs)。
+- 在 Blockbench 里改完模型后，用 `python tools/bbmodel_to_model.py blockbench/desk.bbmodel src/main/resources/assets/chinese_school/models/block/desk.json` 把它同步成游戏实际使用的模型 JSON。
