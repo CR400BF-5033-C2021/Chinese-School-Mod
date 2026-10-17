@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -21,9 +20,6 @@ import net.minecraft.world.phys.BlockHitResult;
  * 右键可以打开 9 格容器的界面。</p>
  */
 public class DeskBlock extends HorizontalDirectionalBlock implements EntityBlock {
-
-    /** 朝向属性，只允许水平四个方向。 */
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public DeskBlock(Properties properties) {
         super(properties);

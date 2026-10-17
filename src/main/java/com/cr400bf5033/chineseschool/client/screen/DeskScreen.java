@@ -10,7 +10,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * 课桌容器界面，背景图尺寸 176x166。
+ * 课桌容器界面，背景图尺寸 176x166，与 {@link AbstractContainerScreen} 的默认尺寸一致。
  */
 public class DeskScreen extends AbstractContainerScreen<DeskMenu> {
 
@@ -19,13 +19,11 @@ public class DeskScreen extends AbstractContainerScreen<DeskMenu> {
 
     public DeskScreen(DeskMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
-        this.imageWidth = 176;
-        this.imageHeight = 166;
     }
 
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0,
-                this.imageWidth, this.imageHeight, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, getLeftPos(), getTopPos(), 0, 0,
+                getImageWidth(), getImageHeight(), 256, 256);
     }
 }
