@@ -28,7 +28,9 @@ public final class ModBlocks {
             properties -> properties
                     .mapColor(MapColor.WOOD)
                     .strength(2.0F, 3.0F)
-                    .sound(SoundType.WOOD));
+                    .sound(SoundType.WOOD)
+                    // 模型不是完整方块，必须关闭遮挡剔除，否则会剔掉相邻方块的面（表现为桌下空洞）
+                    .noOcclusion());
 
     private ModBlocks() {
     }
