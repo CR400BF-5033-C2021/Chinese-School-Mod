@@ -1,0 +1,43 @@
+# ---- Java / Maven / Gradle ----
+target/
+build/
+out/
+*.class
+*.jar
+*.war
+*.ear
+!.mvn/wrapper/maven-wrapper.jar
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ---- IDE ----
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+*.launch
+nbproject/private/
+.sympath
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Logs / temp ----
+*.log
+logs/
+tmp/
+temp/
+
+# ---- Env / secrets ----
+.env
+.env.local
+*.env
+application-local.properties
+application-local.yml
