@@ -1,0 +1,48 @@
+# 模组元数据文件，构建时由 Gradle 展开占位符（变量取自 gradle.properties）
+# 格式为 TOML 0.5.0，完整说明见 https://docs.neoforged.net/docs/gettingstarted/modfiles/
+
+license="${mod_license}"
+
+# 问题反馈地址
+#issueTrackerURL="https://github.com/CR400BF-5033-C2021/Chinese-School-Mod/issues"
+
+# 模组主页
+displayURL="https://github.com/CR400BF-5033-C2021/Chinese-School-Mod"
+
+[[mods]]
+
+modId="${mod_id}"
+
+version="${mod_version}"
+
+displayName="${mod_name}"
+
+authors="${mod_authors}"
+
+#credit=""
+
+description='''
+Chinese School Mod - 一个面向 Minecraft 26.3 的 NeoForge 模组。
+'''
+
+# Mixin 配置声明
+#[[mixins]]
+#config="${mod_id}.mixins.json"
+
+# 访问转换器声明；省略时会回退到 META-INF/accesstransformer.cfg
+#[[accessTransformers]]
+#file="META-INF/accesstransformer.cfg"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"

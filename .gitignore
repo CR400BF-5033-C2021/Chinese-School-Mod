@@ -1,43 +1,49 @@
-# ---- Java / Maven / Gradle ----
-target/
+### Gradle ###
+.gradle
 build/
-out/
-*.class
-*.jar
-*.war
-*.ear
-!.mvn/wrapper/maven-wrapper.jar
-.gradle/
 !gradle/wrapper/gradle-wrapper.jar
+!**/src/**/build/
 
-# ---- IDE ----
+### IntelliJ IDEA ###
 .idea/
+*.iws
 *.iml
 *.ipr
-*.iws
-.vscode/
-.settings/
-.project
-.classpath
-.factorypath
-*.launch
-nbproject/private/
-.sympath
+out/
+!**/src/**/out/
 
-# ---- OS ----
+.run/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.eclipse/
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/**/bin/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
 .DS_Store
+
+### Windows ###
 Thumbs.db
 desktop.ini
 
-# ---- Logs / temp ----
+### Minecraft Modding ###
+run/
+run-data/
+!**/src/**/run/
+**/src/generated/**/.cache/
+repo/
+!**/src/**/repo/
+
+### Logs ###
 *.log
 logs/
-tmp/
-temp/
-
-# ---- Env / secrets ----
-.env
-.env.local
-*.env
-application-local.properties
-application-local.yml
