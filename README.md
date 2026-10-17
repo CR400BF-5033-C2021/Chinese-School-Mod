@@ -1,6 +1,7 @@
 # Chinese School Mod
 
 一个面向 **Minecraft 26.3** 的中式学校主题 [NeoForge](https://neoforged.net/) 模组。
+**请注意：本模组大量使用AI进行开发**
 
 | | |
 | --- | --- |
