@@ -1,6 +1,8 @@
 package com.cr400bf5033.chineseschool.client;
 
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
+import com.cr400bf5033.chineseschool.client.screen.DeskScreen;
+import com.cr400bf5033.chineseschool.registry.ModMenus;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -8,6 +10,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 /**
  * 客户端入口。
@@ -21,6 +24,12 @@ public final class ChineseSchoolClient {
 
     public ChineseSchoolClient(ModContainer modContainer) {
         // 客户端的注册与初始化入口，例如注册渲染类型、菜单界面、按键绑定等
+    }
+
+    /** 注册容器界面（每个 MenuType 对应一个 Screen）。 */
+    @SubscribeEvent
+    public static void registerScreens(RegisterMenuScreensEvent event) {
+        event.register(ModMenus.DESK.get(), DeskScreen::new);
     }
 
     @SubscribeEvent
