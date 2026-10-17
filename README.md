@@ -13,6 +13,23 @@
 | 许可证 | MIT |
 | 作者 | [CR400BF-5033-C2021](https://github.com/CR400BF-5033-C2021) |
 
+## 已添加的内容
+
+### 课桌 `chinese_school:desk`
+
+- **朝向**：东、南、西、北四个方向，放置时正面朝向玩家
+- **容器**：9 格物品栏，右键打开；方块被破坏时内容物会掉出
+- **模型**：Blockbench 工程见 `blockbench/desk.bbmodel`，纹理为自绘 16x16 木纹
+- **配方**：上排 3 个木板（任意种类），中间 1 个铁锭，下排 3 个铁锭
+
+```
+PPP
+.I.
+III
+```
+
+（`P` = 任意木板，`I` = 铁锭，`.` = 留空）
+
 ## 环境要求
 
 - JDK 25（编译目标；Gradle 可用 JDK 21 启动，工具链会自动选择 25）
@@ -36,15 +53,25 @@ Windows 下把 `./gradlew` 换成 `gradlew.bat` 或 `.\gradlew.bat`。
 build.gradle                                   构建脚本（ModDevGradle 2.0.148）
 settings.gradle                                工程设置
 gradle.properties                              版本与模组元信息
+blockbench/desk.bbmodel                        课桌的 Blockbench 工程（含内嵌纹理）
 src/main/templates/META-INF/neoforge.mods.toml 模组元数据模板（构建时展开 ${...}）
 src/main/java/com/cr400bf5033/chineseschool/
 ├── ChineseSchoolMod.java                      主入口，负责挂载各注册表
-├── client/ChineseSchoolClient.java            客户端入口（仅客户端加载）
+├── block/
+│   ├── DeskBlock.java                         课桌方块（朝向、右键开界面、掉落内容物）
+│   └── DeskBlockEntity.java                   方块实体（9 格物品栏的持久化）
+├── menu/DeskMenu.java                         容器菜单（3x3 + 玩家背包）
+├── client/
+│   ├── ChineseSchoolClient.java               客户端入口（仅客户端加载）
+│   └── screen/DeskScreen.java                 课桌界面
 └── registry/
     ├── ModBlocks.java                         方块注册表
     ├── ModItems.java                          物品注册表
+    ├── ModBlockEntities.java                  方块实体注册表
+    ├── ModMenus.java                          菜单类型注册表
     └── ModCreativeModeTabs.java               创造模式物品栏
-src/main/resources/assets/chinese_school/lang/ 语言文件（en_us / zh_cn）
+src/main/resources/assets/chinese_school/      模型、纹理、blockstate、语言文件
+src/main/resources/data/chinese_school/        配方、战利品表
 ```
 
 ## 后续开发
