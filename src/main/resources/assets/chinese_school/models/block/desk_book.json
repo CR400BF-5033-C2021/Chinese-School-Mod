@@ -620,24 +620,114 @@
       }
     },
     {
+      "name": "book_cover",
       "from": [
-        3.5,
+        1.8,
         16.0,
-        4.0
+        3.2
       ],
       "to": [
-        12.5,
-        16.9,
-        12.0
+        14.2,
+        16.3,
+        11.6
       ],
+      "rotation": {
+        "origin": [
+          8,
+          16.0,
+          6.0
+        ],
+        "x": -40,
+        "z": 0,
+        "rescale": false
+      },
+      "faces": {
+        "up": {
+          "texture": "#book",
+          "uv": [
+            0,
+            10,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#book",
+          "uv": [
+            0,
+            10,
+            16,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#book",
+          "uv": [
+            0,
+            10,
+            16,
+            12
+          ]
+        },
+        "south": {
+          "texture": "#book",
+          "uv": [
+            0,
+            10,
+            16,
+            12
+          ]
+        },
+        "east": {
+          "texture": "#book",
+          "uv": [
+            0,
+            10,
+            16,
+            12
+          ]
+        },
+        "west": {
+          "texture": "#book",
+          "uv": [
+            0,
+            10,
+            16,
+            12
+          ]
+        }
+      }
+    },
+    {
+      "name": "book_page_left",
+      "from": [
+        2.2,
+        16.3,
+        3.6
+      ],
+      "to": [
+        8.0,
+        16.6,
+        11.2
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          16.0,
+          6.0
+        ],
+        "x": -40,
+        "z": -6,
+        "rescale": false
+      },
       "faces": {
         "up": {
           "texture": "#book",
           "uv": [
             1,
             1,
-            11,
-            10
+            7,
+            9
           ]
         },
         "down": {
@@ -645,44 +735,123 @@
           "uv": [
             1,
             1,
-            11,
-            10
+            7,
+            9
           ]
         },
         "north": {
           "texture": "#book",
           "uv": [
             1,
-            12,
-            11,
-            14
+            1,
+            7,
+            2
           ]
         },
         "south": {
           "texture": "#book",
           "uv": [
             1,
-            12,
-            11,
-            14
+            1,
+            7,
+            2
           ]
         },
         "east": {
           "texture": "#book",
           "uv": [
             1,
-            12,
-            11,
-            14
+            1,
+            7,
+            2
           ]
         },
         "west": {
           "texture": "#book",
           "uv": [
-            13,
+            1,
+            1,
+            7,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "name": "book_page_right",
+      "from": [
+        8.0,
+        16.3,
+        3.6
+      ],
+      "to": [
+        13.8,
+        16.6,
+        11.2
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          16.0,
+          6.0
+        ],
+        "x": -40,
+        "z": 6,
+        "rescale": false
+      },
+      "faces": {
+        "up": {
+          "texture": "#book",
+          "uv": [
+            9,
             1,
             15,
-            10
+            9
+          ]
+        },
+        "down": {
+          "texture": "#book",
+          "uv": [
+            9,
+            1,
+            15,
+            9
+          ]
+        },
+        "north": {
+          "texture": "#book",
+          "uv": [
+            9,
+            1,
+            15,
+            2
+          ]
+        },
+        "south": {
+          "texture": "#book",
+          "uv": [
+            9,
+            1,
+            15,
+            2
+          ]
+        },
+        "east": {
+          "texture": "#book",
+          "uv": [
+            9,
+            1,
+            15,
+            2
+          ]
+        },
+        "west": {
+          "texture": "#book",
+          "uv": [
+            9,
+            1,
+            15,
+            2
           ]
         }
       }

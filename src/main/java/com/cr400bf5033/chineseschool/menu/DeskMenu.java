@@ -14,19 +14,21 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * 课桌的容器菜单：上方 3x3 为课桌的 9 个槽位，下方是玩家背包与快捷栏。
+ * 课桌的容器菜单：上方一行 5 个槽位，下方是玩家背包与快捷栏。
+ *
+ * <p>布局与漏斗一致，因此界面直接复用漏斗的贴图。</p>
  */
 public class DeskMenu extends AbstractContainerMenu {
 
-    public static final int CONTAINER_SIZE = 9;
+    public static final int CONTAINER_SIZE = 5;
 
-    /** 3x3 槽位左上角在 GUI 中的坐标。 */
-    private static final int SLOT_X = 62;
-    private static final int SLOT_Y = 18;
+    /** 5 个槽位所在的 Y 坐标，以及起始 X 坐标（与漏斗贴图对齐）。 */
+    private static final int SLOT_Y = 20;
+    private static final int SLOT_START_X = 44;
 
-    /** 玩家背包左上角坐标。 */
     private static final int INVENTORY_X = 8;
-    private static final int INVENTORY_Y = 84;
+    private static final int INVENTORY_Y = 51;
+    private static final int HOTBAR_Y = 109;
 
     private final Container container;
     private final BlockPos pos;
@@ -47,23 +49,18 @@ public class DeskMenu extends AbstractContainerMenu {
         this.container = container;
         this.pos = pos;
 
-        // 课桌的 3x3 槽位
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                this.addSlot(new Slot(container, col + row * 3, SLOT_X + col * 18, SLOT_Y + row * 18));
-            }
+        for (int i = 0; i < CONTAINER_SIZE; i++) {
+            this.addSlot(new Slot(container, i, SLOT_START_X + i * 18, SLOT_Y));
         }
 
-        // 玩家背包 9x3
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 this.addSlot(new Slot(playerInventory, col + row * 9 + 9, INVENTORY_X + col * 18, INVENTORY_Y + row * 18));
             }
         }
 
-        // 快捷栏
         for (int col = 0; col < 9; col++) {
-            this.addSlot(new Slot(playerInventory, col, INVENTORY_X + col * 18, 142));
+            this.addSlot(new Slot(playerInventory, col, INVENTORY_X + col * 18, HOTBAR_Y));
         }
     }
 
@@ -85,12 +82,10 @@ public class DeskMenu extends AbstractContainerMenu {
         ItemStack result = stack.copy();
 
         if (index < CONTAINER_SIZE) {
-            // 课桌 -> 玩家背包
             if (!this.moveItemStackTo(stack, CONTAINER_SIZE, this.slots.size(), true)) {
                 return ItemStack.EMPTY;
             }
         } else if (!this.moveItemStackTo(stack, 0, CONTAINER_SIZE, false)) {
-            // 玩家背包 -> 课桌
             return ItemStack.EMPTY;
         }
 
