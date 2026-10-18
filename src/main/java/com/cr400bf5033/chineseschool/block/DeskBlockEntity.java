@@ -21,7 +21,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 /**
- * 课桌的方块实体，负责保存 9 格物品栏并提供容器界面。
+ * 课桌的方块实体，负责保存 9 格物品栏、桌面上的书，并提供容器界面。
  */
 public class DeskBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -38,12 +38,32 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
         }
     };
 
+    /** 摆在桌面上的书；显示与否由方块状态 has_book 决定。 */
+    private ItemStack book = ItemStack.EMPTY;
+
     public DeskBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DESK.get(), pos, state);
     }
 
     public Container getContainer() {
         return this.container;
+    }
+
+    public ItemStack getBook() {
+        return this.book;
+    }
+
+    public void setBook(ItemStack book) {
+        this.book = book;
+        this.setChanged();
+    }
+
+    /** 取走桌面上的书，返回取到的物品（可能为空）。 */
+    public ItemStack takeBook() {
+        ItemStack result = this.book;
+        this.book = ItemStack.EMPTY;
+        this.setChanged();
+        return result;
     }
 
     @Override
@@ -64,6 +84,7 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
             items.add(this.container.getItem(i));
         }
         output.store("Items", ITEMS_CODEC, items);
+        output.store("Book", ItemStack.OPTIONAL_CODEC, this.book);
     }
 
     @Override
@@ -73,9 +94,10 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
         for (int i = 0; i < CONTAINER_SIZE; i++) {
             this.container.setItem(i, i < items.size() ? items.get(i) : ItemStack.EMPTY);
         }
+        this.book = input.read("Book", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
     }
 
-    /** 把容器内的物品全部掉落出来（破坏方块时调用）。 */
+    /** 把容器内的物品和桌面上的书全部掉落出来（破坏方块时调用）。 */
     public void dropContents() {
         if (this.level == null) {
             return;
@@ -86,6 +108,10 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
                 Block.popResource(this.level, this.worldPosition, stack);
                 this.container.setItem(i, ItemStack.EMPTY);
             }
+        }
+        if (!this.book.isEmpty()) {
+            Block.popResource(this.level, this.worldPosition, this.book);
+            this.book = ItemStack.EMPTY;
         }
     }
 }

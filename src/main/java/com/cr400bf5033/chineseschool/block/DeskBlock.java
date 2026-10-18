@@ -2,8 +2,13 @@ package com.cr400bf5033.chineseschool.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.WritableBookItem;
+import net.minecraft.world.item.WrittenBookItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -11,24 +16,35 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
  * 课桌。
  *
  * <p>拥有东、南、西、北四个朝向（{@link #FACING}），放置时正面朝向玩家；
- * 右键可以打开 9 格容器的界面。</p>
+ * 右键可以打开 9 格容器的界面。潜行右键可以把书放到桌面上、或把书取回。</p>
  */
 public class DeskBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
     public DeskBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(BlockStateProperties.HAS_BOOK, Boolean.FALSE));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, BlockStateProperties.HAS_BOOK);
+    }
+
+    /** 放置时正面朝向玩家（与熔炉、箱子一致）。 */
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(BlockStateProperties.HAS_BOOK, Boolean.FALSE);
     }
 
     @Override
@@ -36,8 +52,46 @@ public class DeskBlock extends HorizontalDirectionalBlock implements EntityBlock
         return new DeskBlockEntity(pos, state);
     }
 
+    /** 潜行右键：桌上没有书且手里是书 -> 把书放上去。 */
+    @Override
+    public InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+                                       Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!player.isShiftKeyDown() || state.getValue(BlockStateProperties.HAS_BOOK) || !isBook(stack)) {
+            return InteractionResult.PASS;
+        }
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
+        if (level.getBlockEntity(pos) instanceof DeskBlockEntity desk) {
+            ItemStack placed = stack.copy();
+            placed.setCount(1);
+            if (!player.hasInfiniteMaterials()) {
+                stack.shrink(1);
+            }
+            desk.setBook(placed);
+            level.setBlock(pos, state.setValue(BlockStateProperties.HAS_BOOK, Boolean.TRUE), Block.UPDATE_ALL);
+        }
+        return InteractionResult.CONSUME;
+    }
+
     @Override
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        // 潜行右键：桌上有书则取回
+        if (player.isShiftKeyDown() && state.getValue(BlockStateProperties.HAS_BOOK)) {
+            if (level.isClientSide()) {
+                return InteractionResult.SUCCESS;
+            }
+            if (level.getBlockEntity(pos) instanceof DeskBlockEntity desk) {
+                ItemStack book = desk.takeBook();
+                if (!book.isEmpty() && !player.getInventory().add(book)) {
+                    player.drop(book, false);
+                }
+                level.setBlock(pos, state.setValue(BlockStateProperties.HAS_BOOK, Boolean.FALSE), Block.UPDATE_ALL);
+            }
+            return InteractionResult.CONSUME;
+        }
+
+        // 普通右键：打开容器界面
         if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
@@ -49,10 +103,15 @@ public class DeskBlock extends HorizontalDirectionalBlock implements EntityBlock
 
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        // 方块被破坏时把容器里的物品掉出来，避免物品丢失
+        // 方块被破坏时把容器里的物品和桌面上的书都掉出来，避免物品丢失
         if (!level.isClientSide() && level.getBlockEntity(pos) instanceof DeskBlockEntity desk) {
             desk.dropContents();
         }
         return super.playerWillDestroy(level, pos, state, player);
+    }
+
+    /** 与讲台一致：只有书与笔、成书可以放置。 */
+    public static boolean isBook(ItemStack stack) {
+        return stack.getItem() instanceof WrittenBookItem || stack.getItem() instanceof WritableBookItem;
     }
 }

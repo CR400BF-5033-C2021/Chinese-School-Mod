@@ -19,7 +19,8 @@
 
 - **朝向**：东、南、西、北四个方向，放置时正面朝向玩家
 - **容器**：9 格物品栏，右键打开；方块被破坏时内容物会掉出
-- **模型**：桌面 + 四条桌腿 + 带金属内衬的桌洞；Blockbench 工程见 `blockbench/desk.bbmodel`，木纹与金属均为自绘 16x16 纹理
+- **桌面放书**：潜行右键把书放到桌面上（只接受书与笔、成书，与讲台一致），再潜行右键取回；书上桌后模型切换为 `desk_book`
+- **模型**：桌面 + 四条桌腿 + 带金属内衬的桌洞；Blockbench 工程见 `blockbench/desk.bbmodel`，木纹、金属与书本均为自绘 16x16 纹理
 - **配方**：上排 3 个木板（任意种类），中间 1 个铁锭，下排 3 个铁锭
 
 ```
@@ -84,4 +85,4 @@ src/main/resources/data/chinese_school/        配方、战利品表
 
 - 模组元数据中的版本号、作者等信息统一由 `gradle.properties` 提供，无需直接修改 TOML 文件。
 - 本仓库使用 [ModDevGradle](https://github.com/neoforged/moddevgradle) 插件；官方模板见 [NeoForgeMDKs](https://github.com/NeoForgeMDKs)。
-- 在 Blockbench 里改完模型后，用 `python tools/bbmodel_to_model.py blockbench/desk.bbmodel src/main/resources/assets/chinese_school/models/block/desk.json` 把它同步成游戏实际使用的模型 JSON。
+- 在 Blockbench 里改完模型后，用 `python tools/bbmodel_to_model.py blockbench/desk.bbmodel src/main/resources/assets/chinese_school/models/block/desk.json` 把它同步成游戏实际使用的模型 JSON；随后用 `python tools/add_book_variant.py` 重新派生带书的 `desk_book.json`。
