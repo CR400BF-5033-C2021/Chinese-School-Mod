@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.WritableBookItem;
 import net.minecraft.world.item.WrittenBookItem;
@@ -56,24 +57,33 @@ public class DeskBlock extends HorizontalDirectionalBlock implements EntityBlock
     @Override
     public InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                        Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!player.isShiftKeyDown() || state.getValue(BlockStateProperties.HAS_BOOK) || !isBook(stack)) {
-            // 交给 useWithoutItem 处理（开界面 / 取书）。
-            // 注意必须返回 TRY_WITH_EMPTY_HAND，返回 PASS 时原版不会再调用 useWithoutItem。
-            return InteractionResult.TRY_WITH_EMPTY_HAND;
-        }
-        if (level.isClientSide()) {
-            return InteractionResult.SUCCESS;
-        }
-        if (level.getBlockEntity(pos) instanceof DeskBlockEntity desk) {
-            ItemStack placed = stack.copy();
-            placed.setCount(1);
-            if (!player.hasInfiniteMaterials()) {
-                stack.shrink(1);
+        boolean hasBook = state.getValue(BlockStateProperties.HAS_BOOK);
+
+        // 潜行 + 手持书 + 桌上没书：把书放到桌面上
+        if (player.isShiftKeyDown() && !hasBook && isBook(stack)) {
+            if (level.isClientSide()) {
+                return InteractionResult.SUCCESS;
             }
-            desk.setBook(placed);
-            level.setBlock(pos, state.setValue(BlockStateProperties.HAS_BOOK, Boolean.TRUE), Block.UPDATE_ALL);
+            if (level.getBlockEntity(pos) instanceof DeskBlockEntity desk) {
+                ItemStack placed = stack.copy();
+                placed.setCount(1);
+                if (!player.hasInfiniteMaterials()) {
+                    stack.shrink(1);
+                }
+                desk.setBook(placed);
+                level.setBlock(pos, state.setValue(BlockStateProperties.HAS_BOOK, Boolean.TRUE), Block.UPDATE_ALL);
+            }
+            return InteractionResult.CONSUME;
         }
-        return InteractionResult.CONSUME;
+
+        // 手持方块时不抢交互，否则玩家没法贴着课桌放方块
+        if (stack.getItem() instanceof BlockItem) {
+            return InteractionResult.PASS;
+        }
+
+        // 其余情况交给 useWithoutItem 处理（开界面 / 取书）。
+        // 必须返回 TRY_WITH_EMPTY_HAND：返回 PASS 时原版不会再调用 useWithoutItem。
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
