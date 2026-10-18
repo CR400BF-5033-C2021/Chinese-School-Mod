@@ -57,7 +57,9 @@ public class DeskBlock extends HorizontalDirectionalBlock implements EntityBlock
     public InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                        Player player, InteractionHand hand, BlockHitResult hit) {
         if (!player.isShiftKeyDown() || state.getValue(BlockStateProperties.HAS_BOOK) || !isBook(stack)) {
-            return InteractionResult.PASS;
+            // 交给 useWithoutItem 处理（开界面 / 取书）。
+            // 注意必须返回 TRY_WITH_EMPTY_HAND，返回 PASS 时原版不会再调用 useWithoutItem。
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         }
         if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
