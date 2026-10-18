@@ -1,6 +1,7 @@
 package com.cr400bf5033.chineseschool.registry;
 
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
+import com.cr400bf5033.chineseschool.block.ChairBlock;
 import com.cr400bf5033.chineseschool.block.DeskBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -30,6 +31,14 @@ public final class ModBlocks {
                     .strength(2.0F, 3.0F)
                     .sound(SoundType.WOOD)
                     // 模型不是完整方块，必须关闭遮挡剔除，否则会剔掉相邻方块的面（表现为桌下空洞）
+                    .noOcclusion());
+
+    /** 椅子：可朝向、可坐；正下方是课桌时会自动倒扣在桌上。 */
+    public static final DeferredBlock<ChairBlock> CHAIR = BLOCKS.registerBlock("chair", ChairBlock::new,
+            properties -> properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
                     .noOcclusion());
 
     private ModBlocks() {

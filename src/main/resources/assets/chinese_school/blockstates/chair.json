@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,inverted=false": {
+      "model": "chinese_school:block/chair",
+      "y": 90
+    },
+    "facing=east,inverted=true": {
+      "model": "chinese_school:block/chair_up_down",
+      "y": 90
+    },
+    "facing=north,inverted=false": {
+      "model": "chinese_school:block/chair"
+    },
+    "facing=north,inverted=true": {
+      "model": "chinese_school:block/chair_up_down"
+    },
+    "facing=south,inverted=false": {
+      "model": "chinese_school:block/chair",
+      "y": 180
+    },
+    "facing=south,inverted=true": {
+      "model": "chinese_school:block/chair_up_down",
+      "y": 180
+    },
+    "facing=west,inverted=false": {
+      "model": "chinese_school:block/chair",
+      "y": 270
+    },
+    "facing=west,inverted=true": {
+      "model": "chinese_school:block/chair_up_down",
+      "y": 270
+    }
+  }
+}

@@ -2,5 +2,7 @@
   "itemGroup.chinese_school.main": "Chinese School Mod",
   "block.chinese_school.desk": "Desk",
   "item.chinese_school.desk": "Desk",
-  "container.chinese_school.desk": "Desk"
+  "container.chinese_school.desk": "Desk",
+  "block.chinese_school.chair": "Chair",
+  "item.chinese_school.chair": "Chair"
 }
