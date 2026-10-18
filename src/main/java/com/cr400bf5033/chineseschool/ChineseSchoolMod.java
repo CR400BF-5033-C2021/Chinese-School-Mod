@@ -1,5 +1,6 @@
 package com.cr400bf5033.chineseschool;
 
+import com.cr400bf5033.chineseschool.event.ChairSeatHandler;
 import com.cr400bf5033.chineseschool.event.DeskInteractionHandler;
 import com.cr400bf5033.chineseschool.registry.ModBlockEntities;
 import com.cr400bf5033.chineseschool.registry.ModBlocks;
@@ -41,6 +42,7 @@ public final class ChineseSchoolMod {
 
         // 游戏事件总线：交互处理（潜行手持书右键课桌时绕过原版的方块交互抑制）
         NeoForge.EVENT_BUS.addListener(DeskInteractionHandler::onRightClickBlock);
+        NeoForge.EVENT_BUS.addListener(ChairSeatHandler::onMount);
 
         LOGGER.info("{} 已加载（Minecraft 26.3 / NeoForge）", MOD_NAME);
     }

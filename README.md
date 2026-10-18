@@ -31,6 +31,13 @@ III
 
 （`P` = 任意木板，`I` = 铁锭，`.` = 留空）
 
+### 椅子 `chinese_school:chair`
+
+- **朝向**：东、南、西、北四个方向，放置时朝向玩家看的方向
+- **坐**：空手右键坐下，坐下时视角转向椅背的反方向；潜行即可起身
+- **倒扣**：正下方是课桌时自动切换为倒扣状态（`chair_up_down` 模型），此时不能坐；课桌被移走后自动恢复
+- **模型**：Blockbench 工程见 `blockbench/chair.bbmodel` 与 `blockbench/chair_up_down.bbmodel`，与课桌共用木纹/金属贴图
+
 ## 环境要求
 
 - JDK 25（编译目标；Gradle 可用 JDK 21 启动，工具链会自动选择 25）

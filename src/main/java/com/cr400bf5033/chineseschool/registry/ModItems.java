@@ -24,6 +24,10 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> DESK = ITEMS.registerItem("desk",
             properties -> new BlockItem(ModBlocks.DESK.get(), properties));
 
+    /** 椅子的物品形式。 */
+    public static final DeferredItem<BlockItem> CHAIR = ITEMS.registerItem("chair",
+            properties -> new BlockItem(ModBlocks.CHAIR.get(), properties));
+
     private ModItems() {
     }
 }

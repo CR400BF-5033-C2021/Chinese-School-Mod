@@ -2,5 +2,7 @@
   "itemGroup.chinese_school.main": "中式学校",
   "block.chinese_school.desk": "课桌",
   "item.chinese_school.desk": "课桌",
-  "container.chinese_school.desk": "课桌"
+  "container.chinese_school.desk": "课桌",
+  "block.chinese_school.chair": "椅子",
+  "item.chinese_school.chair": "椅子"
 }
