@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=east,has_book=false": {
       "model": "chinese_school:block/desk",
       "y": 90
     },
-    "facing=north": {
+    "facing=east,has_book=true": {
+      "model": "chinese_school:block/desk_book",
+      "y": 90
+    },
+    "facing=north,has_book=false": {
       "model": "chinese_school:block/desk"
     },
-    "facing=south": {
+    "facing=north,has_book=true": {
+      "model": "chinese_school:block/desk_book"
+    },
+    "facing=south,has_book=false": {
       "model": "chinese_school:block/desk",
       "y": 180
     },
-    "facing=west": {
+    "facing=south,has_book=true": {
+      "model": "chinese_school:block/desk_book",
+      "y": 180
+    },
+    "facing=west,has_book=false": {
       "model": "chinese_school:block/desk",
+      "y": 270
+    },
+    "facing=west,has_book=true": {
+      "model": "chinese_school:block/desk_book",
       "y": 270
     }
   }
