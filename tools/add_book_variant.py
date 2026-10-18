@@ -12,8 +12,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODELS = os.path.join(ROOT, "src", "main", "resources", "assets", "chinese_school", "models", "block")
 MODID = "chinese_school"
 
-# 书本整体向后倾斜的角度；原点放在桌面靠近玩家的一侧
-TILT = -40
+# 书本平摊在桌面上（不倾斜）；原点放在书的中心
+TILT = 0
 ORIGIN = [8, 16.0, 6.0]
 
 # 名字, from, to, z 轴额外旋转（做出左右两页的 V 形）, 各面 UV
@@ -36,7 +36,7 @@ BOOK_ELEMENTS = [
         "book_page_left",
         [2.2, 16.3, 3.6],
         [8.0, 16.6, 11.2],
-        -6,
+        -5,
         {
             "up": [1, 1, 7, 9],
             "down": [1, 1, 7, 9],
@@ -50,7 +50,7 @@ BOOK_ELEMENTS = [
         "book_page_right",
         [8.0, 16.3, 3.6],
         [13.8, 16.6, 11.2],
-        6,
+        5,
         {
             "up": [9, 1, 15, 9],
             "down": [9, 1, 15, 9],

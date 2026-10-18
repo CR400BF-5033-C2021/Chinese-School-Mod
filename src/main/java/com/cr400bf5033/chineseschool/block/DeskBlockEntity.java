@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -61,7 +63,11 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
 
         @Override
         public void set(int index, int value) {
-            DeskBlockEntity.this.page = value;
+            if (DeskBlockEntity.this.page != value) {
+                DeskBlockEntity.this.page = value;
+                // 原版讲台界面关掉了翻页音效（BookViewScreen 无参构造器），这里在服务端补上
+                DeskBlockEntity.this.playPageTurnSound();
+            }
         }
 
         @Override
@@ -69,6 +75,12 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
             return 1;
         }
     };
+
+    private void playPageTurnSound() {
+        if (this.level != null && !this.level.isClientSide()) {
+            this.level.playSound(null, this.worldPosition, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
+    }
 
     public DeskBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DESK.get(), pos, state);
