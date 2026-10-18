@@ -13,20 +13,25 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 /**
- * 课桌的方块实体，负责保存 9 格物品栏、桌面上的书，并提供容器界面。
+ * 课桌的方块实体。
+ *
+ * <p>保存 5 格物品栏、桌面上摆着的书以及书的页码；桌上是否有书由方块状态
+ * {@code has_book} 表示，供模型切换使用。</p>
  */
 public class DeskBlockEntity extends BlockEntity implements MenuProvider {
 
     /** 物品栏槽位数量。 */
-    public static final int CONTAINER_SIZE = 9;
+    public static final int CONTAINER_SIZE = 5;
 
     private static final Codec<List<ItemStack>> ITEMS_CODEC = ItemStack.OPTIONAL_CODEC.listOf();
 
@@ -38,8 +43,32 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
         }
     };
 
-    /** 摆在桌面上的书；显示与否由方块状态 has_book 决定。 */
-    private ItemStack book = ItemStack.EMPTY;
+    /** 桌面上的书（1 格容器，直接复用讲台的菜单来阅读）。 */
+    private final SimpleContainer bookContainer = new SimpleContainer(1) {
+        @Override
+        public void setChanged() {
+            DeskBlockEntity.this.onBookChanged();
+        }
+    };
+
+    private int page;
+
+    private final ContainerData pageData = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return DeskBlockEntity.this.page;
+        }
+
+        @Override
+        public void set(int index, int value) {
+            DeskBlockEntity.this.page = value;
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+    };
 
     public DeskBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.DESK.get(), pos, state);
@@ -49,21 +78,40 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
         return this.container;
     }
 
+    public Container getBookContainer() {
+        return this.bookContainer;
+    }
+
+    public ContainerData getPageData() {
+        return this.pageData;
+    }
+
     public ItemStack getBook() {
-        return this.book;
+        return this.bookContainer.getItem(0);
     }
 
     public void setBook(ItemStack book) {
-        this.book = book;
-        this.setChanged();
+        this.bookContainer.setItem(0, book);
     }
 
     /** 取走桌面上的书，返回取到的物品（可能为空）。 */
     public ItemStack takeBook() {
-        ItemStack result = this.book;
-        this.book = ItemStack.EMPTY;
+        ItemStack book = this.bookContainer.getItem(0).copy();
+        this.bookContainer.setItem(0, ItemStack.EMPTY);
+        return book;
+    }
+
+    /** 书被放上/取下时同步 {@code has_book} 方块状态，让模型跟着切换。 */
+    private void onBookChanged() {
         this.setChanged();
-        return result;
+        if (this.level == null || this.level.isClientSide()) {
+            return;
+        }
+        BlockState state = this.getBlockState();
+        boolean hasBook = !this.bookContainer.getItem(0).isEmpty();
+        if (state.getBlock() instanceof DeskBlock && state.getValue(BlockStateProperties.HAS_BOOK) != hasBook) {
+            this.level.setBlock(this.worldPosition, state.setValue(BlockStateProperties.HAS_BOOK, hasBook), Block.UPDATE_ALL);
+        }
     }
 
     @Override
@@ -84,7 +132,8 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
             items.add(this.container.getItem(i));
         }
         output.store("Items", ITEMS_CODEC, items);
-        output.store("Book", ItemStack.OPTIONAL_CODEC, this.book);
+        output.store("Book", ItemStack.OPTIONAL_CODEC, this.bookContainer.getItem(0));
+        output.store("Page", Codec.INT, this.page);
     }
 
     @Override
@@ -94,10 +143,11 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
         for (int i = 0; i < CONTAINER_SIZE; i++) {
             this.container.setItem(i, i < items.size() ? items.get(i) : ItemStack.EMPTY);
         }
-        this.book = input.read("Book", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
+        this.bookContainer.setItem(0, input.read("Book", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY));
+        this.page = input.read("Page", Codec.INT).orElse(0);
     }
 
-    /** 把容器内的物品和桌面上的书全部掉落出来（破坏方块时调用）。 */
+    /** 把物品栏和桌面上的书全部掉落出来（破坏方块时调用）。 */
     public void dropContents() {
         if (this.level == null) {
             return;
@@ -109,9 +159,10 @@ public class DeskBlockEntity extends BlockEntity implements MenuProvider {
                 this.container.setItem(i, ItemStack.EMPTY);
             }
         }
-        if (!this.book.isEmpty()) {
-            Block.popResource(this.level, this.worldPosition, this.book);
-            this.book = ItemStack.EMPTY;
+        ItemStack book = this.bookContainer.getItem(0);
+        if (!book.isEmpty()) {
+            Block.popResource(this.level, this.worldPosition, book);
+            this.bookContainer.setItem(0, ItemStack.EMPTY);
         }
     }
 }

@@ -36,8 +36,6 @@ def convert(bbmodel_path, modid):
     for element in bb.get("elements", []):
         if element.get("type", "cube") != "cube":
             raise SystemExit(f"不支持的元素类型：{element.get('type')}")
-        if "rotation" in element:
-            raise SystemExit(f"元素 {element.get('name')} 带旋转，Minecraft 方块模型不支持元素旋转")
 
         faces = {}
         for face_name, face in element.get("faces", {}).items():
@@ -51,7 +49,12 @@ def convert(bbmodel_path, modid):
                 entry["rotation"] = face["rotation"]
             faces[face_name] = entry
 
-        elements.append({"from": element["from"], "to": element["to"], "faces": faces})
+        converted = {"from": element["from"], "to": element["to"]}
+        # 1.21.11 起方块模型支持元素旋转，这里原样带过去
+        if "rotation" in element:
+            converted["rotation"] = element["rotation"]
+        converted["faces"] = faces
+        elements.append(converted)
 
     model_textures = {"particle": next(iter(material_to_path.values()))}
     for material, path in material_to_path.items():

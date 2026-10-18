@@ -4,7 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.LecternMenu;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.WritableBookItem;
@@ -88,28 +90,34 @@ public class DeskBlock extends HorizontalDirectionalBlock implements EntityBlock
 
     @Override
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        // 潜行右键：桌上有书则取回
-        if (player.isShiftKeyDown() && state.getValue(BlockStateProperties.HAS_BOOK)) {
-            if (level.isClientSide()) {
-                return InteractionResult.SUCCESS;
-            }
-            if (level.getBlockEntity(pos) instanceof DeskBlockEntity desk) {
-                ItemStack book = desk.takeBook();
-                if (!book.isEmpty() && !player.getInventory().add(book)) {
-                    Block.popResource(level, pos, book);
-                }
-                level.setBlock(pos, state.setValue(BlockStateProperties.HAS_BOOK, Boolean.FALSE), Block.UPDATE_ALL);
+        boolean hasBook = state.getValue(BlockStateProperties.HAS_BOOK);
+
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
+        if (!(level.getBlockEntity(pos) instanceof DeskBlockEntity desk)) {
+            return InteractionResult.CONSUME;
+        }
+
+        // 潜行右键：把桌面上的书取回
+        if (player.isShiftKeyDown() && hasBook) {
+            ItemStack book = desk.takeBook();
+            if (!book.isEmpty() && !player.getInventory().add(book)) {
+                Block.popResource(level, pos, book);
             }
             return InteractionResult.CONSUME;
         }
 
-        // 普通右键：打开容器界面
-        if (level.isClientSide()) {
-            return InteractionResult.SUCCESS;
+        // 桌上有书：像讲台一样打开书本界面（阅读 / 翻页 / 取书）
+        if (hasBook) {
+            player.openMenu(new SimpleMenuProvider(
+                    (containerId, inventory, p) -> new LecternMenu(containerId, desk.getBookContainer(), desk.getPageData()),
+                    desk.getDisplayName()));
+            return InteractionResult.CONSUME;
         }
-        if (level.getBlockEntity(pos) instanceof DeskBlockEntity desk) {
-            player.openMenu(desk, pos);
-        }
+
+        // 普通右键：打开 5 格容器界面
+        player.openMenu(desk, pos);
         return InteractionResult.CONSUME;
     }
 
