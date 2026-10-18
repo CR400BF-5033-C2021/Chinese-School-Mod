@@ -1,5 +1,6 @@
 package com.cr400bf5033.chineseschool;
 
+import com.cr400bf5033.chineseschool.event.DeskInteractionHandler;
 import com.cr400bf5033.chineseschool.registry.ModBlockEntities;
 import com.cr400bf5033.chineseschool.registry.ModBlocks;
 import com.cr400bf5033.chineseschool.registry.ModCreativeModeTabs;
@@ -9,6 +10,7 @@ import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 
 /**
@@ -36,6 +38,9 @@ public final class ChineseSchoolMod {
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModMenus.MENUS.register(modEventBus);
         ModCreativeModeTabs.TABS.register(modEventBus);
+
+        // 游戏事件总线：交互处理（潜行手持书右键课桌时绕过原版的方块交互抑制）
+        NeoForge.EVENT_BUS.addListener(DeskInteractionHandler::onRightClickBlock);
 
         LOGGER.info("{} 已加载（Minecraft 26.3 / NeoForge）", MOD_NAME);
     }
