@@ -84,7 +84,7 @@ public class DeskBlock extends HorizontalDirectionalBlock implements EntityBlock
             if (level.getBlockEntity(pos) instanceof DeskBlockEntity desk) {
                 ItemStack book = desk.takeBook();
                 if (!book.isEmpty() && !player.getInventory().add(book)) {
-                    player.drop(book, false);
+                    Block.popResource(level, pos, book);
                 }
                 level.setBlock(pos, state.setValue(BlockStateProperties.HAS_BOOK, Boolean.FALSE), Block.UPDATE_ALL);
             }
