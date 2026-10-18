@@ -24,7 +24,7 @@ public class DeskScreen extends AbstractContainerScreen<DeskMenu> {
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         // 先画原版的半透明模糊背景，再画容器贴图
         super.extractBackground(graphics, mouseX, mouseY, partialTick);
-        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, getLeftPos(), getTopPos(), 0, 0,
-                getImageWidth(), getImageHeight(), 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0,
+                this.imageWidth, this.imageHeight, 256, 256);
     }
 }
