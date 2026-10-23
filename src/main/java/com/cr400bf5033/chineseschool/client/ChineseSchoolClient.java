@@ -1,7 +1,9 @@
 package com.cr400bf5033.chineseschool.client;
 
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
+import com.cr400bf5033.chineseschool.client.renderer.ChairSeatRenderer;
 import com.cr400bf5033.chineseschool.client.screen.DeskScreen;
+import com.cr400bf5033.chineseschool.registry.ModEntities;
 import com.cr400bf5033.chineseschool.registry.ModMenus;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
@@ -10,6 +12,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 /**
@@ -30,6 +33,12 @@ public final class ChineseSchoolClient {
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenus.DESK.get(), DeskScreen::new);
+    }
+
+    /** 注册实体渲染器（座位实体本身不可见，用空渲染器）。 */
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntities.CHAIR_SEAT.get(), ChairSeatRenderer::new);
     }
 
     @SubscribeEvent

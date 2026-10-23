@@ -1,11 +1,9 @@
 package com.cr400bf5033.chineseschool.block;
 
+import com.cr400bf5033.chineseschool.entity.ChairSeatEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -15,7 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.redstone.Orientation;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -29,11 +26,8 @@ public class ChairBlock extends HorizontalDirectionalBlock {
     /** 是否处于"倒扣在课桌上"的状态。 */
     public static final BooleanProperty INVERTED = BooleanProperty.create("inverted");
 
-    /** 座位实体（隐藏的盔甲架）的名字标记，用于识别与清理。 */
-    private static final String SEAT_MARKER = "chinese_school_chair_seat";
-
-    /** 座位高度（方块坐标，0 为方块底面，椅面高 10/16）。 */
-    private static final double SEAT_HEIGHT = 0.6;
+    /** 椅面高度（方块坐标，椅面在模型里高 10/16）。 */
+    public static final double SEAT_HEIGHT = 10.0 / 16.0;
 
     public ChairBlock(Properties properties) {
         super(properties);
@@ -77,7 +71,7 @@ public class ChairBlock extends HorizontalDirectionalBlock {
 
         float yaw = state.getValue(FACING).toYRot();
         if (level.isClientSide()) {
-            // 客户端直接转向，避免坐下后视线还停留在原方向
+            // 客户端立刻转向，避免坐下瞬间视角还停在原方向
             player.setYRot(yaw);
             player.setYHeadRot(yaw);
             return InteractionResult.SUCCESS;
@@ -86,47 +80,8 @@ public class ChairBlock extends HorizontalDirectionalBlock {
             return InteractionResult.PASS;
         }
 
-        ArmorStand seat = new ArmorStand(level, pos.getX() + 0.5, pos.getY() + SEAT_HEIGHT, pos.getZ() + 0.5);
-        seat.setInvisible(true);
-        seat.setNoGravity(true);
-        seat.setSilent(true);
-        seat.setCustomName(Component.literal(SEAT_MARKER));
-        seat.setCustomNameVisible(false);
-        level.addFreshEntity(seat);
-
-        player.startRiding(seat);
-
-        // 不做任何高度假设：先让引擎按自己的规则把玩家放到座位上，量出与目标高度的偏差，
-        // 再整体平移座位并重新定位玩家，保证最终正好坐在椅面上。
-        double targetY = pos.getY() + SEAT_HEIGHT;
-        seat.positionRider(player);
-        double delta = player.getY() - targetY;
-        if (Math.abs(delta) > 1.0E-3) {
-            seat.setPos(seat.getX(), seat.getY() - delta, seat.getZ());
-            seat.positionRider(player);
-        }
-
-        player.setYRot(yaw);
-        player.setYHeadRot(yaw);
-        return InteractionResult.CONSUME;
-    }
-
-    /** 判断某个实体是不是本模组生成的座位。 */
-    public static boolean isSeat(Entity entity) {
-        return entity instanceof ArmorStand
-                && entity.getCustomName() != null
-                && SEAT_MARKER.equals(entity.getCustomName().getString());
-    }
-
-    @Override
-    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        // 方块被破坏时把座位实体一并清理，避免残留
-        if (!level.isClientSide()) {
-            for (ArmorStand seat : level.getEntitiesOfClass(ArmorStand.class, new AABB(pos).inflate(1.5), ChairBlock::isSeat)) {
-                seat.ejectPassengers();
-                seat.discard();
-            }
-        }
-        return super.playerWillDestroy(level, pos, state, player);
+        return ChairSeatEntity.sit(player, pos, SEAT_HEIGHT, state.getValue(FACING))
+                ? InteractionResult.CONSUME
+                : InteractionResult.SUCCESS;
     }
 }
