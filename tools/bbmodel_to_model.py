@@ -50,9 +50,20 @@ def convert(bbmodel_path, modid):
             faces[face_name] = entry
 
         converted = {"from": element["from"], "to": element["to"]}
-        # 1.21.11 起方块模型支持元素旋转，这里原样带过去
+        # Blockbench 的元素旋转是 [x, y, z] 欧拉角数组，而 Minecraft 要求
+        # {origin, x, y, z, rescale} 对象，这里做一次转换（1.21.11 起支持多轴旋转）
         if "rotation" in element:
-            converted["rotation"] = element["rotation"]
+            rotation = element["rotation"]
+            if isinstance(rotation, list):
+                converted["rotation"] = {
+                    "origin": element.get("origin", [8, 8, 8]),
+                    "x": rotation[0],
+                    "y": rotation[1],
+                    "z": rotation[2],
+                    "rescale": False,
+                }
+            else:
+                converted["rotation"] = rotation
         converted["faces"] = faces
         elements.append(converted)
 

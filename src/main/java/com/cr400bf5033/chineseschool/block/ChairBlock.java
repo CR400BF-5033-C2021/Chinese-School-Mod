@@ -86,21 +86,26 @@ public class ChairBlock extends HorizontalDirectionalBlock {
             return InteractionResult.PASS;
         }
 
-        ArmorStand seat = new ArmorStand(level, 0, 0, 0);
+        ArmorStand seat = new ArmorStand(level, pos.getX() + 0.5, pos.getY() + SEAT_HEIGHT, pos.getZ() + 0.5);
         seat.setInvisible(true);
         seat.setNoGravity(true);
         seat.setSilent(true);
         seat.setCustomName(Component.literal(SEAT_MARKER));
         seat.setCustomNameVisible(false);
-
-        // 引擎按「载具坐点 - 乘客挂点」放置乘客，这里先用零坐标算出这个高度差，
-        // 再反推座位实体应该放在哪，保证坐下时正好落在椅面上。
-        double lift = seat.getPassengerRidingPosition(player).y - player.getVehicleAttachmentPoint(seat).y;
-        seat.setPos(pos.getX() + 0.5, pos.getY() + SEAT_HEIGHT - lift, pos.getZ() + 0.5);
-
         level.addFreshEntity(seat);
 
         player.startRiding(seat);
+
+        // 不做任何高度假设：先让引擎按自己的规则把玩家放到座位上，量出与目标高度的偏差，
+        // 再整体平移座位并重新定位玩家，保证最终正好坐在椅面上。
+        double targetY = pos.getY() + SEAT_HEIGHT;
+        seat.positionRider(player);
+        double delta = player.getY() - targetY;
+        if (Math.abs(delta) > 1.0E-3) {
+            seat.setPos(seat.getX(), seat.getY() - delta, seat.getZ());
+            seat.positionRider(player);
+        }
+
         player.setYRot(yaw);
         player.setYHeadRot(yaw);
         return InteractionResult.CONSUME;
