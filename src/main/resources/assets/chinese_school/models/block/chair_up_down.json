@@ -17,11 +17,17 @@
         4,
         17
       ],
-      "rotation": [
-        0,
-        0,
-        -180
-      ],
+      "rotation": {
+        "origin": [
+          8,
+          2,
+          12
+        ],
+        "x": 0,
+        "y": 0,
+        "z": -180,
+        "rescale": false
+      },
       "faces": {
         "north": {
           "texture": "#desk",
@@ -90,11 +96,17 @@
         13,
         17
       ],
-      "rotation": [
-        0,
-        0,
-        -180
-      ],
+      "rotation": {
+        "origin": [
+          8,
+          2,
+          11
+        ],
+        "x": 0,
+        "y": 0,
+        "z": -180,
+        "rescale": false
+      },
       "faces": {
         "north": {
           "texture": "#desk",
@@ -163,11 +175,17 @@
         14,
         19
       ],
-      "rotation": [
-        0,
-        0,
-        -180
-      ],
+      "rotation": {
+        "origin": [
+          8,
+          2,
+          11
+        ],
+        "x": 0,
+        "y": 0,
+        "z": -180,
+        "rescale": false
+      },
       "faces": {
         "north": {
           "texture": "#desk_metal",
@@ -236,11 +254,17 @@
         14,
         19
       ],
-      "rotation": [
-        0,
-        0,
-        -180
-      ],
+      "rotation": {
+        "origin": [
+          8,
+          2,
+          11
+        ],
+        "x": 0,
+        "y": 0,
+        "z": -180,
+        "rescale": false
+      },
       "faces": {
         "north": {
           "texture": "#desk_metal",
@@ -309,11 +333,17 @@
         -4,
         19
       ],
-      "rotation": [
-        0,
-        0,
-        -180
-      ],
+      "rotation": {
+        "origin": [
+          8,
+          2,
+          12
+        ],
+        "x": 0,
+        "y": 0,
+        "z": -180,
+        "rescale": false
+      },
       "faces": {
         "north": {
           "texture": "#desk_metal",
@@ -382,11 +412,17 @@
         -4,
         19
       ],
-      "rotation": [
-        0,
-        0,
-        -180
-      ],
+      "rotation": {
+        "origin": [
+          8,
+          2,
+          12
+        ],
+        "x": 0,
+        "y": 0,
+        "z": -180,
+        "rescale": false
+      },
       "faces": {
         "north": {
           "texture": "#desk_metal",
@@ -455,11 +491,17 @@
         -2,
         17
       ],
-      "rotation": [
-        0,
-        0,
-        -180
-      ],
+      "rotation": {
+        "origin": [
+          8,
+          0,
+          12
+        ],
+        "x": 0,
+        "y": 0,
+        "z": -180,
+        "rescale": false
+      },
       "faces": {
         "north": {
           "texture": "#desk_metal",
@@ -528,11 +570,17 @@
         -2,
         17
       ],
-      "rotation": [
-        0,
-        0,
-        -180
-      ],
+      "rotation": {
+        "origin": [
+          8,
+          0,
+          12
+        ],
+        "x": 0,
+        "y": 0,
+        "z": -180,
+        "rescale": false
+      },
       "faces": {
         "north": {
           "texture": "#desk_metal",
@@ -601,11 +649,17 @@
         0,
         13
       ],
-      "rotation": [
-        0,
-        0,
-        -180
-      ],
+      "rotation": {
+        "origin": [
+          8,
+          2,
+          17
+        ],
+        "x": 0,
+        "y": 0,
+        "z": -180,
+        "rescale": false
+      },
       "faces": {
         "north": {
           "texture": "#desk_metal",
@@ -674,11 +728,17 @@
         0,
         13
       ],
-      "rotation": [
-        0,
-        0,
-        -180
-      ],
+      "rotation": {
+        "origin": [
+          8,
+          2,
+          17
+        ],
+        "x": 0,
+        "y": 0,
+        "z": -180,
+        "rescale": false
+      },
       "faces": {
         "north": {
           "texture": "#desk_metal",
