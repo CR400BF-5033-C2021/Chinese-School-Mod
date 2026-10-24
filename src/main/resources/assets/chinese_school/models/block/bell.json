@@ -1,0 +1,214 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "chinese_school:block/bell_body",
+    "bell_body": "chinese_school:block/bell_body",
+    "bell_grille": "chinese_school:block/bell_grille"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        3,
+        11
+      ],
+      "to": [
+        14,
+        15,
+        15
+      ],
+      "faces": {
+        "down": {
+          "texture": "#bell_body",
+          "uv": [
+            2,
+            11,
+            14,
+            15
+          ]
+        },
+        "up": {
+          "texture": "#bell_body",
+          "uv": [
+            2,
+            11,
+            14,
+            15
+          ]
+        },
+        "north": {
+          "texture": "#bell_body",
+          "uv": [
+            2,
+            1,
+            14,
+            13
+          ]
+        },
+        "south": {
+          "texture": "#bell_body",
+          "uv": [
+            2,
+            1,
+            14,
+            13
+          ]
+        },
+        "east": {
+          "texture": "#bell_body",
+          "uv": [
+            11,
+            1,
+            15,
+            13
+          ]
+        },
+        "west": {
+          "texture": "#bell_body",
+          "uv": [
+            11,
+            1,
+            15,
+            13
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        3,
+        10
+      ],
+      "to": [
+        14,
+        15,
+        11
+      ],
+      "faces": {
+        "down": {
+          "texture": "#bell_grille",
+          "uv": [
+            2,
+            10,
+            14,
+            11
+          ]
+        },
+        "up": {
+          "texture": "#bell_grille",
+          "uv": [
+            2,
+            10,
+            14,
+            11
+          ]
+        },
+        "north": {
+          "texture": "#bell_grille",
+          "uv": [
+            2,
+            1,
+            14,
+            13
+          ]
+        },
+        "south": {
+          "texture": "#bell_grille",
+          "uv": [
+            2,
+            1,
+            14,
+            13
+          ]
+        },
+        "east": {
+          "texture": "#bell_grille",
+          "uv": [
+            10,
+            1,
+            11,
+            13
+          ]
+        },
+        "west": {
+          "texture": "#bell_grille",
+          "uv": [
+            10,
+            1,
+            11,
+            13
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        6,
+        15,
+        12
+      ],
+      "to": [
+        10,
+        16,
+        14
+      ],
+      "faces": {
+        "down": {
+          "texture": "#bell_body",
+          "uv": [
+            6,
+            12,
+            10,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#bell_body",
+          "uv": [
+            6,
+            12,
+            10,
+            14
+          ]
+        },
+        "north": {
+          "texture": "#bell_body",
+          "uv": [
+            6,
+            0,
+            10,
+            1
+          ]
+        },
+        "south": {
+          "texture": "#bell_body",
+          "uv": [
+            6,
+            0,
+            10,
+            1
+          ]
+        },
+        "east": {
+          "texture": "#bell_body",
+          "uv": [
+            12,
+            0,
+            14,
+            1
+          ]
+        },
+        "west": {
+          "texture": "#bell_body",
+          "uv": [
+            12,
+            0,
+            14,
+            1
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "chinese_school:block/bell",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "chinese_school:block/bell"
+    },
+    "facing=south": {
+      "model": "chinese_school:block/bell",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "chinese_school:block/bell",
+      "y": 270
+    }
+  }
+}

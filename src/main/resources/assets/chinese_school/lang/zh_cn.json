@@ -4,5 +4,7 @@
   "item.chinese_school.desk": "课桌",
   "container.chinese_school.desk": "课桌",
   "block.chinese_school.chair": "椅子",
-  "item.chinese_school.chair": "椅子"
+  "item.chinese_school.chair": "椅子",
+  "block.chinese_school.bell": "电铃",
+  "item.chinese_school.bell": "电铃"
 }

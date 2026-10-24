@@ -1,6 +1,7 @@
 package com.cr400bf5033.chineseschool.registry;
 
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
+import com.cr400bf5033.chineseschool.block.BellBlock;
 import com.cr400bf5033.chineseschool.block.ChairBlock;
 import com.cr400bf5033.chineseschool.block.DeskBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -39,6 +40,14 @@ public final class ModBlocks {
                     .mapColor(MapColor.WOOD)
                     .strength(2.0F, 3.0F)
                     .sound(SoundType.WOOD)
+                    .noOcclusion());
+
+    /** 电铃：挂在墙上的音箱，右键开关上下课铃声。 */
+    public static final DeferredBlock<BellBlock> BELL = BLOCKS.registerBlock("bell", BellBlock::new,
+            properties -> properties
+                    .mapColor(MapColor.COLOR_GRAY)
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.METAL)
                     .noOcclusion());
 
     private ModBlocks() {
