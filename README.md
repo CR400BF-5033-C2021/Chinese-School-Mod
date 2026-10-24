@@ -50,7 +50,7 @@ PPP
 ### 电铃 `chinese_school:bell`
 
 - **外形**：挂在墙上的音箱式电铃，只能贴在方块侧面，右键开关上下课铃声
-- **铃声文件**：把 `shangke.ogg`（上课铃）与 `xiake.ogg`（下课铃）放进 `<游戏实例>/config/`，启动时会被复制进 `config/chinese_school_bell_pack/` 并作为内置资源包加载
+- **铃声文件**：把 `shangke.ogg`（上课铃）与 `xiake.ogg`（下课铃）放进 `<游戏实例>/config/`，启动时会被复制进 `config/chinese_school_bell_packs/chinese_school_bell/` 并作为内置资源包加载（改完 ogg 需重启）
 - **循环**：上课铃 → 40 分钟（现实时间）→ 下课铃 → 10 分钟 → 上课铃 ……；关闭时立即切断正在播放的铃声
 - **模型**：`assets/chinese_school/models/block/bell.json`，深灰塑料外壳 + 网罩贴图
 
