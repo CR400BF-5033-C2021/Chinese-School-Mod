@@ -7,9 +7,9 @@
     "I": "minecraft:iron_ingot"
   },
   "pattern": [
-    "...",
+    "   ",
     "PPP",
-    ".I."
+    " I "
   ],
   "result": {
     "id": "chinese_school:chair",

@@ -4,5 +4,7 @@
   "item.chinese_school.desk": "Desk",
   "container.chinese_school.desk": "Desk",
   "block.chinese_school.chair": "Chair",
-  "item.chinese_school.chair": "Chair"
+  "item.chinese_school.chair": "Chair",
+  "block.chinese_school.bell": "Electric Bell",
+  "item.chinese_school.bell": "Electric Bell"
 }

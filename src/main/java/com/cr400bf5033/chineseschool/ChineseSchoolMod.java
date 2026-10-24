@@ -7,6 +7,7 @@ import com.cr400bf5033.chineseschool.registry.ModCreativeModeTabs;
 import com.cr400bf5033.chineseschool.registry.ModEntities;
 import com.cr400bf5033.chineseschool.registry.ModItems;
 import com.cr400bf5033.chineseschool.registry.ModMenus;
+import com.cr400bf5033.chineseschool.registry.ModSounds;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -38,6 +39,7 @@ public final class ChineseSchoolMod {
         ModItems.ITEMS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
+        ModSounds.SOUNDS.register(modEventBus);
         ModMenus.MENUS.register(modEventBus);
         ModCreativeModeTabs.TABS.register(modEventBus);
 

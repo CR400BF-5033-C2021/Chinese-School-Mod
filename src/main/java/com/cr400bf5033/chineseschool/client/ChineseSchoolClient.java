@@ -14,6 +14,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 
 /**
  * 客户端入口。
@@ -39,6 +40,12 @@ public final class ChineseSchoolClient {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.CHAIR_SEAT.get(), ChairSeatRenderer::new);
+    }
+
+    /** 把 config 里的上下课铃声打包成资源包挂上去。 */
+    @SubscribeEvent
+    public static void addPackFinders(AddPackFindersEvent event) {
+        BellSoundPack.onAddPackFinders(event);
     }
 
     @SubscribeEvent

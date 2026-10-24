@@ -28,6 +28,10 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> CHAIR = ITEMS.registerItem("chair",
             properties -> new BlockItem(ModBlocks.CHAIR.get(), properties));
 
+    /** 电铃的物品形式。 */
+    public static final DeferredItem<BlockItem> BELL = ITEMS.registerItem("bell",
+            properties -> new BlockItem(ModBlocks.BELL.get(), properties));
+
     private ModItems() {
     }
 }
