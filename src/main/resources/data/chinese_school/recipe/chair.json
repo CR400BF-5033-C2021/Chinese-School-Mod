@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "chair",
+  "key": {
+    "P": "#minecraft:planks",
+    "I": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "...",
+    "PPP",
+    ".I."
+  ],
+  "result": {
+    "id": "chinese_school:chair",
+    "count": 1
+  }
+}
