@@ -1,17 +1,92 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=north,powered=false,ringing=0": {
+      "model": "chinese_school:block/bell"
+    },
+    "facing=north,powered=false,ringing=1": {
+      "model": "chinese_school:block/bell"
+    },
+    "facing=north,powered=false,ringing=2": {
+      "model": "chinese_school:block/bell"
+    },
+    "facing=north,powered=true,ringing=0": {
+      "model": "chinese_school:block/bell"
+    },
+    "facing=north,powered=true,ringing=1": {
+      "model": "chinese_school:block/bell"
+    },
+    "facing=north,powered=true,ringing=2": {
+      "model": "chinese_school:block/bell"
+    },
+    "facing=east,powered=false,ringing=0": {
       "model": "chinese_school:block/bell",
       "y": 90
     },
-    "facing=north": {
-      "model": "chinese_school:block/bell"
+    "facing=east,powered=false,ringing=1": {
+      "model": "chinese_school:block/bell",
+      "y": 90
     },
-    "facing=south": {
+    "facing=east,powered=false,ringing=2": {
+      "model": "chinese_school:block/bell",
+      "y": 90
+    },
+    "facing=east,powered=true,ringing=0": {
+      "model": "chinese_school:block/bell",
+      "y": 90
+    },
+    "facing=east,powered=true,ringing=1": {
+      "model": "chinese_school:block/bell",
+      "y": 90
+    },
+    "facing=east,powered=true,ringing=2": {
+      "model": "chinese_school:block/bell",
+      "y": 90
+    },
+    "facing=south,powered=false,ringing=0": {
       "model": "chinese_school:block/bell",
       "y": 180
     },
-    "facing=west": {
+    "facing=south,powered=false,ringing=1": {
+      "model": "chinese_school:block/bell",
+      "y": 180
+    },
+    "facing=south,powered=false,ringing=2": {
+      "model": "chinese_school:block/bell",
+      "y": 180
+    },
+    "facing=south,powered=true,ringing=0": {
+      "model": "chinese_school:block/bell",
+      "y": 180
+    },
+    "facing=south,powered=true,ringing=1": {
+      "model": "chinese_school:block/bell",
+      "y": 180
+    },
+    "facing=south,powered=true,ringing=2": {
+      "model": "chinese_school:block/bell",
+      "y": 180
+    },
+    "facing=west,powered=false,ringing=0": {
+      "model": "chinese_school:block/bell",
+      "y": 270
+    },
+    "facing=west,powered=false,ringing=1": {
+      "model": "chinese_school:block/bell",
+      "y": 270
+    },
+    "facing=west,powered=false,ringing=2": {
+      "model": "chinese_school:block/bell",
+      "y": 270
+    },
+    "facing=west,powered=true,ringing=0": {
+      "model": "chinese_school:block/bell",
+      "y": 270
+    },
+    "facing=west,powered=true,ringing=1": {
+      "model": "chinese_school:block/bell",
+      "y": 270
+    },
+    "facing=west,powered=true,ringing=2": {
       "model": "chinese_school:block/bell",
       "y": 270
     }

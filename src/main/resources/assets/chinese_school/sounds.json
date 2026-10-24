@@ -1,0 +1,18 @@
+{
+  "shangke": {
+    "sounds": [
+      {
+        "name": "chinese_school:shangke",
+        "stream": true
+      }
+    ]
+  },
+  "xiake": {
+    "sounds": [
+      {
+        "name": "chinese_school:xiake",
+        "stream": true
+      }
+    ]
+  }
+}
