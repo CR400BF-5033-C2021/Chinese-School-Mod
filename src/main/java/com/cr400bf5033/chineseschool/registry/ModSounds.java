@@ -25,8 +25,9 @@ public final class ModSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> XIAKE = register("xiake");
 
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
-        return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(
-                Identifier.fromNamespaceAndPath(ChineseSchoolMod.MOD_ID, name)));
+        // 固定 16 格范围的原版式音效事件
+        return SOUNDS.register(name, () -> SoundEvent.createFixedRangeEvent(
+                Identifier.fromNamespaceAndPath(ChineseSchoolMod.MOD_ID, name), 16.0F));
     }
 
     private ModSounds() {
