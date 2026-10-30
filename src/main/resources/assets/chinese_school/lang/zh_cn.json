@@ -6,5 +6,7 @@
   "block.chinese_school.chair": "椅子",
   "item.chinese_school.chair": "椅子",
   "block.chinese_school.bell": "电铃",
-  "item.chinese_school.bell": "电铃"
+  "item.chinese_school.bell": "电铃",
+  "subtitles.chinese_school.shangke": "上课铃响起",
+  "subtitles.chinese_school.xiake": "下课铃响起"
 }

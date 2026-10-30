@@ -6,5 +6,7 @@
   "block.chinese_school.chair": "Chair",
   "item.chinese_school.chair": "Chair",
   "block.chinese_school.bell": "Electric Bell",
-  "item.chinese_school.bell": "Electric Bell"
+  "item.chinese_school.bell": "Electric Bell",
+  "subtitles.chinese_school.shangke": "Class bell rings",
+  "subtitles.chinese_school.xiake": "Break bell rings"
 }
