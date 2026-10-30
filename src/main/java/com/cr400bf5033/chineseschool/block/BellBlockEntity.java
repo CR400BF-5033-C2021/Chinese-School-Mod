@@ -100,7 +100,9 @@ public class BellBlockEntity extends BlockEntity {
 
         bell.lastTriggered = key;
         boolean isClass = classTime;
-        // 和原版唱片机一样：以方块位置为声源，原地播放一次
+        // 和原版唱片机一样：以方块位置为声源原地播放一次。
+        // 音量 4.0 → 可变范围事件的广播半径 64 格，客户端那条实例会一直播下去，
+        // 所以玩家走出再回来听到的是当前进度，而不是从头开始。
         SoundEvent sound = (isClass ? ModSounds.SHANGKE : ModSounds.XIAKE).get();
         serverLevel.playSound(null, pos, sound, SoundSource.RECORDS, 4.0F, 1.0F);
         bell.setRinging(serverLevel, pos, isClass ? 1 : 2);

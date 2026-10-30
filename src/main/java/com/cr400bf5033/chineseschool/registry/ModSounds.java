@@ -22,9 +22,10 @@ public final class ModSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> XIAKE = register("xiake");
 
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
-        // 固定 16 格范围的原版式声音事件
-        return SOUNDS.register(name, () -> SoundEvent.createFixedRangeEvent(
-                Identifier.fromNamespaceAndPath(ChineseSchoolMod.MOD_ID, name), 16.0F));
+        // 可变范围事件：广播半径 = 16 × 播放音量（见 SoundEvent#getRange）。
+        // 和原版唱片机一致，靠客户端那条持续存在的声音实例实现"走出去再回来接着听"。
+        return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(
+                Identifier.fromNamespaceAndPath(ChineseSchoolMod.MOD_ID, name)));
     }
 
     private ModSounds() {
