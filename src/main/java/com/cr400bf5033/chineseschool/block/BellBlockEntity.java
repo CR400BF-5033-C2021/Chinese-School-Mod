@@ -4,6 +4,10 @@ import com.cr400bf5033.chineseschool.registry.ModBlockEntities;
 import com.cr400bf5033.chineseschool.registry.ModSounds;
 import com.cr400bf5033.chineseschool.util.BellSchedule;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
@@ -20,49 +24,54 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 /**
  * 电铃的方块实体。
  *
  * <p>按现实系统时间触发：当系统时间的「时:分」命中 {@code config/shangketime.json}
- * 或 {@code config/xiaketime.json} 中的某个时刻时播放对应铃声。声音以电铃为声源，
- * 音量随距离衰减，可听范围由声音事件固定为 16 格。</p>
+ * 或 {@code config/xiaketime.json} 中的某个时刻时播放对应铃声。</p>
+ *
+ * <p>铃声按秒切成多段逐秒播放，因此玩家走出 16 格再回来时会从"当前第几秒"继续，
+ * 而不是从头重播。</p>
  */
 public class BellBlockEntity extends BlockEntity {
 
-    /** 响铃状态（含音符粒子）持续的 tick 数。 */
-    public static final int RING_TICKS = 100;
-
-    /** 一次响铃后多少 tick 内允许"走出范围又回来"的玩家补听到声音（30 秒）。 */
-    public static final int SOUND_ACTIVE_TICKS = 600;
+    /** 每一段的时长（tick）。 */
+    public static final int SEGMENT_TICKS = 20;
 
     /** 听得见铃声的范围（格）。 */
     public static final double HEAR_RANGE = 16.0;
 
     private boolean powered;
-    private int ringTicks;
     /** 上一次触发的时间键（HH:mm），用于同一分钟只响一次。 */
     private String lastTriggered = "";
 
-    /** 本次响铃还剩多少 tick 可以给新进入范围的玩家补发声音。 */
-    private int soundActiveTicks;
-    /** 本次响铃是否上课铃。 */
+    /** 当前播放到第几段，-1 表示没在播放。 */
+    private int currentSegment = -1;
+    /** 当前段已经播放了多少 tick。 */
+    private int segmentTicks;
+    /** 这次响的是不是上课铃。 */
     private boolean playingClass = true;
-    /** 本次响铃已经收到过声音的玩家（防止重复播放）。 */
-    private final java.util.Set<java.util.UUID> servedPlayers = new java.util.HashSet<>();
+    /** 已经收到过当前段声音的玩家，避免同一段重复播放。 */
+    private final Set<UUID> servedPlayers = new HashSet<>();
 
     public BellBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.BELL.get(), pos, state);
     }
 
-    /** 红石信号变化：充能时立刻静音。 */
+    /** 红石信号变化：充能时立刻静音并停止播放。 */
     public void onPowerChanged(boolean powered) {
         this.powered = powered;
-        this.ringTicks = 0;
-        this.soundActiveTicks = 0;
+        this.currentSegment = -1;
+        this.segmentTicks = 0;
         this.servedPlayers.clear();
         if (powered) {
             this.stopSounds();
+            if (this.level != null && this.level.getBlockState(this.worldPosition).hasProperty(BellBlock.RINGING)) {
+                this.level.setBlock(this.worldPosition,
+                        this.level.getBlockState(this.worldPosition).setValue(BellBlock.RINGING, 0), Block.UPDATE_ALL);
+            }
         }
         this.setChanged();
     }
@@ -73,35 +82,28 @@ public class BellBlockEntity extends BlockEntity {
             return;
         }
 
-        // 响铃中：冒音符粒子，结束后把状态复位
-        if (bell.ringTicks > 0) {
-            bell.ringTicks--;
-            if (bell.ringTicks % 4 == 0) {
-                serverLevel.sendParticles(ParticleTypes.NOTE,
-                        pos.getX() + 0.5 + (serverLevel.getRandom().nextDouble() - 0.5) * 0.8,
-                        pos.getY() + 0.55 + (serverLevel.getRandom().nextDouble() - 0.5) * 0.5,
-                        pos.getZ() + 0.5 + (serverLevel.getRandom().nextDouble() - 0.5) * 0.8,
-                        1, 0.0, 0.15, 0.0, 0.0);
+        // 正在播放：逐秒推进，给范围内还没听到当前段的玩家发声音
+        if (bell.currentSegment >= 0) {
+            bell.segmentTicks++;
+            if (bell.segmentTicks >= SEGMENT_TICKS) {
+                bell.segmentTicks = 0;
+                bell.currentSegment++;
+                bell.servedPlayers.clear();
             }
-            if (bell.ringTicks == 0) {
-                bell.setRinging(serverLevel, pos, 0);
+            int total = bell.chunkCount();
+            if (bell.currentSegment >= total) {
+                bell.stopPlayback(serverLevel, pos);
+                return;
+            }
+            if (bell.currentSegment >= 0) {
+                sendCurrentSegment(serverLevel, pos, bell);
+                spawnNoteParticles(serverLevel, pos);
             }
         }
 
         // 红石充能时完全不响
         if (bell.powered) {
             return;
-        }
-
-        // 响铃有效期内的补发：走出范围又走回来的玩家能重新听到
-        if (bell.soundActiveTicks > 0) {
-            bell.soundActiveTicks--;
-            if (bell.soundActiveTicks % 4 == 0) {
-                resendToEnteringPlayers(serverLevel, pos, bell);
-            }
-            if (bell.soundActiveTicks == 0) {
-                bell.servedPlayers.clear();
-            }
         }
 
         // 每秒检查一次系统时间
@@ -124,48 +126,59 @@ public class BellBlockEntity extends BlockEntity {
         bell.lastTriggered = key;
         boolean isClass = classTime;
         bell.playingClass = isClass;
-        // 以电铃为声源的定点播放：音量随距离衰减，可听范围由声音事件固定为 16 格
-        playToRange(serverLevel, pos, bell);
+        bell.currentSegment = 0;
+        bell.segmentTicks = 0;
+        bell.servedPlayers.clear();
         bell.setRinging(serverLevel, pos, isClass ? 1 : 2);
-        bell.ringTicks = RING_TICKS;
+        sendCurrentSegment(serverLevel, pos, bell);
         bell.setChanged();
     }
 
-    /** 开始一次响铃：给当前 16 格内的玩家发声音，并开启补发窗口。 */
-    private static void playToRange(ServerLevel level, BlockPos pos, BellBlockEntity bell) {
-        bell.servedPlayers.clear();
-        bell.soundActiveTicks = SOUND_ACTIVE_TICKS;
-        Vec3 center = Vec3.atCenterOf(pos);
-        double rangeSqr = HEAR_RANGE * HEAR_RANGE;
-        for (ServerPlayer player : level.players()) {
-            if (player.position().distanceToSqr(center) <= rangeSqr) {
-                sendSound(player, level, pos, bell.playingClass);
-                bell.servedPlayers.add(player.getUUID());
-            }
-        }
+    private int chunkCount() {
+        return (this.playingClass ? ModSounds.SHANGKE : ModSounds.XIAKE).size();
     }
 
-    /** 响铃有效期内，给刚走进范围的玩家补发声音。 */
-    private static void resendToEnteringPlayers(ServerLevel level, BlockPos pos, BellBlockEntity bell) {
+    private void stopPlayback(ServerLevel level, BlockPos pos) {
+        this.currentSegment = -1;
+        this.segmentTicks = 0;
+        this.servedPlayers.clear();
+        this.setRinging(level, pos, 0);
+        this.setChanged();
+    }
+
+    /** 把"当前这一段"发给范围内还没收到的玩家。 */
+    private static void sendCurrentSegment(ServerLevel level, BlockPos pos, BellBlockEntity bell) {
+        List<DeferredHolder<SoundEvent, SoundEvent>> chunks =
+                bell.playingClass ? ModSounds.SHANGKE : ModSounds.XIAKE;
+        if (bell.currentSegment < 0 || bell.currentSegment >= chunks.size()) {
+            return;
+        }
+        SoundEvent sound = chunks.get(bell.currentSegment).get();
+        Holder<SoundEvent> holder = Holder.direct(sound);
         Vec3 center = Vec3.atCenterOf(pos);
         double rangeSqr = HEAR_RANGE * HEAR_RANGE;
         for (ServerPlayer player : level.players()) {
-            if (bell.servedPlayers.contains(player.getUUID())) {
+            if (player.position().distanceToSqr(center) > rangeSqr) {
                 continue;
             }
-            if (player.position().distanceToSqr(center) <= rangeSqr) {
-                sendSound(player, level, pos, bell.playingClass);
-                bell.servedPlayers.add(player.getUUID());
+            if (!bell.servedPlayers.add(player.getUUID())) {
+                continue;
             }
+            player.connection.send(new ClientboundSoundPacket(holder, SoundSource.RECORDS,
+                    pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                    1.0F, 1.0F, level.getRandom().nextLong()));
         }
     }
 
-    /** 以电铃位置为声源给单个玩家播放铃声。 */
-    private static void sendSound(ServerPlayer player, ServerLevel level, BlockPos pos, boolean isClass) {
-        SoundEvent sound = (isClass ? ModSounds.SHANGKE : ModSounds.XIAKE).get();
-        player.connection.send(new ClientboundSoundPacket(Holder.direct(sound), SoundSource.RECORDS,
-                pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                1.0F, 1.0F, level.getRandom().nextLong()));
+    private static void spawnNoteParticles(ServerLevel level, BlockPos pos) {
+        if (level.getGameTime() % 4L != 0L) {
+            return;
+        }
+        level.sendParticles(ParticleTypes.NOTE,
+                pos.getX() + 0.5 + (level.getRandom().nextDouble() - 0.5) * 0.8,
+                pos.getY() + 0.55 + (level.getRandom().nextDouble() - 0.5) * 0.5,
+                pos.getZ() + 0.5 + (level.getRandom().nextDouble() - 0.5) * 0.8,
+                1, 0.0, 0.15, 0.0, 0.0);
     }
 
     private void setRinging(ServerLevel level, BlockPos pos, int value) {
@@ -175,14 +188,18 @@ public class BellBlockEntity extends BlockEntity {
         }
     }
 
-    /** 强制切断两种铃声。 */
+    /** 强制切断正在播放的铃声（逐段停止）。 */
     private void stopSounds() {
         if (!(this.level instanceof ServerLevel serverLevel)) {
             return;
         }
         for (ServerPlayer player : serverLevel.players()) {
-            player.connection.send(new ClientboundStopSoundPacket(ModSounds.SHANGKE.get().location(), SoundSource.RECORDS));
-            player.connection.send(new ClientboundStopSoundPacket(ModSounds.XIAKE.get().location(), SoundSource.RECORDS));
+            for (DeferredHolder<SoundEvent, SoundEvent> chunk : ModSounds.SHANGKE) {
+                player.connection.send(new ClientboundStopSoundPacket(chunk.get().location(), SoundSource.RECORDS));
+            }
+            for (DeferredHolder<SoundEvent, SoundEvent> chunk : ModSounds.XIAKE) {
+                player.connection.send(new ClientboundStopSoundPacket(chunk.get().location(), SoundSource.RECORDS));
+            }
         }
     }
 
@@ -190,7 +207,9 @@ public class BellBlockEntity extends BlockEntity {
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putBoolean("Powered", this.powered);
-        output.putInt("RingTicks", this.ringTicks);
+        output.putBoolean("PlayingClass", this.playingClass);
+        output.putInt("CurrentSegment", this.currentSegment);
+        output.putInt("SegmentTicks", this.segmentTicks);
         output.putString("LastTriggered", this.lastTriggered);
     }
 
@@ -198,7 +217,9 @@ public class BellBlockEntity extends BlockEntity {
     public void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         this.powered = input.getBooleanOr("Powered", false);
-        this.ringTicks = input.getIntOr("RingTicks", 0);
+        this.playingClass = input.getBooleanOr("PlayingClass", true);
+        this.currentSegment = input.getIntOr("CurrentSegment", -1);
+        this.segmentTicks = input.getIntOr("SegmentTicks", 0);
         this.lastTriggered = input.getStringOr("LastTriggered", "");
     }
 }
