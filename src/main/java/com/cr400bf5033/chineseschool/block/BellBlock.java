@@ -26,11 +26,11 @@ import net.minecraft.world.phys.BlockHitResult;
 /**
  * 电铃。
  *
- * <p>挂在墙上的音箱式电铃。放下 5 秒后自动开始上下课铃声循环：
- * 上课铃 → 40 分钟 → 下课铃 → 10 分钟 → 上课铃 ……</p>
+ * <p>挂在墙上的音箱式电铃。按现实系统时间触发：系统时间的「时:分」命中
+ * {@code config/shangketime.json} 或 {@code config/xiaketime.json} 中的时刻时播放对应铃声。</p>
  *
- * <p>用红石控制：未充能时正常循环；充能时进入静音状态（编号 {@link #RINGING} 归零），
- * 取消充能后重置循环，再等 5 秒重新从上课铃开始。</p>
+ * <p>用红石控制：未充能时正常按时间响铃；充能时进入静音状态
+ * （编号 {@link #RINGING} 归零，并切断正在播放的声音）。</p>
  */
 public class BellBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
