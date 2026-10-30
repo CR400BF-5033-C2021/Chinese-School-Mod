@@ -5,13 +5,10 @@ import com.cr400bf5033.chineseschool.registry.ModSounds;
 import com.cr400bf5033.chineseschool.util.BellSchedule;
 import java.time.LocalTime;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.network.protocol.game.ClientboundStopSoundPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -19,22 +16,18 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.Vec3;
 
 /**
  * 电铃的方块实体。
  *
  * <p>按现实系统时间触发：当系统时间的「时:分」命中 {@code config/shangketime.json}
- * 或 {@code config/xiaketime.json} 中的某个时刻时播放对应铃声。声音只发给 16 格内的玩家，
- * 并且把声源放在该玩家自己身上，因此音量不会随距离衰减。</p>
+ * 或 {@code config/xiaketime.json} 中的某个时刻时播放对应铃声。声音以电铃为声源，
+ * 音量随距离衰减，可听范围由声音事件固定为 16 格。</p>
  */
 public class BellBlockEntity extends BlockEntity {
 
     /** 响铃状态（含音符粒子）持续的 tick 数。 */
     public static final int RING_TICKS = 100;
-
-    /** 听得见铃声的范围（格）。 */
-    public static final double HEAR_RANGE = 16.0;
 
     private boolean powered;
     private int ringTicks;
@@ -100,28 +93,12 @@ public class BellBlockEntity extends BlockEntity {
 
         bell.lastTriggered = key;
         boolean isClass = classTime;
-        playToNearby(serverLevel, pos, isClass ? ModSounds.SHANGKE.get() : ModSounds.XIAKE.get());
+        // 用原版的定点播放：声音以电铃为声源，音量随距离衰减，固定范围由声音事件本身限定
+        serverLevel.playSound(null, pos, isClass ? ModSounds.SHANGKE.get() : ModSounds.XIAKE.get(),
+                SoundSource.RECORDS, 1.0F, 1.0F);
         bell.setRinging(serverLevel, pos, isClass ? 1 : 2);
         bell.ringTicks = RING_TICKS;
         bell.setChanged();
-    }
-
-    /**
-     * 只发给 16 格内的玩家，并把声源放在玩家自己身上，
-     * 这样音量恒定、不随距离衰减（相当于"原版音效 + 固定 16 格范围"）。
-     */
-    private static void playToNearby(ServerLevel level, BlockPos pos, SoundEvent sound) {
-        Vec3 center = Vec3.atCenterOf(pos);
-        double rangeSqr = HEAR_RANGE * HEAR_RANGE;
-        Holder<SoundEvent> holder = Holder.direct(sound);
-        for (ServerPlayer player : level.players()) {
-            if (player.position().distanceToSqr(center) > rangeSqr) {
-                continue;
-            }
-            player.connection.send(new ClientboundSoundPacket(holder, SoundSource.RECORDS,
-                    player.getX(), player.getEyeY(), player.getZ(),
-                    1.0F, 1.0F, level.getRandom().nextLong()));
-        }
     }
 
     private void setRinging(ServerLevel level, BlockPos pos, int value) {
