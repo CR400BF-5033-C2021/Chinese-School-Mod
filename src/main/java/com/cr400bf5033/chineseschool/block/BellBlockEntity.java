@@ -92,8 +92,8 @@ public class BellBlockEntity extends BlockEntity {
             return;
         }
 
-        boolean classTime = BellSchedule.isClassTime(now);
-        boolean breakTime = BellSchedule.isBreakTime(now);
+        boolean classTime = BellSchedule.isClassTime(serverLevel, now);
+        boolean breakTime = BellSchedule.isBreakTime(serverLevel, now);
         if (!classTime && !breakTime) {
             return;
         }
