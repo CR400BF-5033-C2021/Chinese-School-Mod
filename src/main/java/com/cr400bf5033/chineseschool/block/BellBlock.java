@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
@@ -21,7 +22,11 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
  * 电铃。
@@ -76,6 +81,42 @@ public class BellBlock extends HorizontalDirectionalBlock implements EntityBlock
     protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos,
                                      Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
         return this.canSurvive(state, level, pos) ? state : Blocks.AIR.defaultBlockState();
+    }
+
+    /** 与 bbmodel 一致的实际体积（1/16 格单位，朝向为北时）。 */
+    private static final VoxelShape NORTH_SHAPE = Shapes.or(
+            Block.box(2.0, 3.0, 10.0, 14.0, 15.0, 15.0),
+            Block.box(6.0, 15.0, 12.0, 10.0, 16.0, 14.0));
+
+    /** 碰撞箱/选中箱按模型真实体积计算，并随朝向旋转。 */
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return switch (state.getValue(FACING)) {
+            case SOUTH -> rotateShape(180);
+            case EAST -> rotateShape(90);
+            case WEST -> rotateShape(270);
+            default -> NORTH_SHAPE;
+        };
+    }
+
+    private static VoxelShape rotateShape(int degrees) {
+        VoxelShape shape = Shapes.empty();
+        for (AABB box : NORTH_SHAPE.toAabbs()) {
+            double x1 = box.minX * 16.0;
+            double x2 = box.maxX * 16.0;
+            double y1 = box.minY * 16.0;
+            double y2 = box.maxY * 16.0;
+            double z1 = box.minZ * 16.0;
+            double z2 = box.maxZ * 16.0;
+            VoxelShape rotated = switch (degrees) {
+                case 180 -> Block.box(16 - x2, y1, 16 - z2, 16 - x1, y2, 16 - z1);
+                case 90 -> Block.box(16 - z2, y1, x1, 16 - z1, y2, x2);
+                case 270 -> Block.box(z1, y1, 16 - x2, z2, y2, 16 - x1);
+                default -> Block.box(x1, y1, z1, x2, y2, z2);
+            };
+            shape = Shapes.or(shape, rotated);
+        }
+        return shape;
     }
 
     /** 红石信号变化：充能静音，取消充能后重置循环。 */
