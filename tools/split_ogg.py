@@ -51,10 +51,11 @@ def split(path, name, seconds_per_chunk=1):
     pages = read_pages(data)
     rate = sample_rate(data, pages)
 
-    # 头页：BOS 页 + 后续仍带 header 标志/无 granule 的页
+    # 头页：BOS 页 + comment/setup 页（它们的 granule 都是 0），
+    # 真正的音频页从第一个 granule > 0 的页开始
     header_end = 0
-    for idx, (_s, end, _ht, granule) in enumerate(pages):
-        if granule >= 0 and idx > 0:
+    for idx, (_s, _end, _ht, granule) in enumerate(pages):
+        if idx > 0 and granule > 0:
             header_end = idx
             break
     headers = pages[:header_end]
@@ -92,9 +93,13 @@ def split(path, name, seconds_per_chunk=1):
         chunk_name = f"{name}_{idx:02d}"
         with open(os.path.join(out_dir, f"{chunk_name}.ogg"), "wb") as fh:
             fh.write(buf)
+        # 每段都必须带齐三个 Vorbis 头（identification / comment / setup）
+        for mark in (b"\x01vorbis", b"\x03vorbis", b"\x05vorbis"):
+            if mark not in buf[:4096]:
+                raise ValueError(f"{chunk_name} 缺少头部标记 {mark!r}")
         names.append(chunk_name)
 
-    print(f"{name}: {len(pages)} 页, 采样率 {rate}, 切出 {len(names)} 段")
+    print(f"{name}: {len(pages)} 页, 采样率 {rate}, 头页 {len(headers)} 个, 切出 {len(names)} 段")
     return names
 
 
