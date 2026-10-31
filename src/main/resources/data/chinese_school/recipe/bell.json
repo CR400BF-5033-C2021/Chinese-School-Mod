@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bell",
+  "key": {
+    "R": "minecraft:redstone",
+    "I": "minecraft:iron_ingot",
+    "N": "minecraft:note_block"
+  },
+  "pattern": [
+    "RIR",
+    "INI",
+    "RIR"
+  ],
+  "result": {
+    "id": "chinese_school:bell",
+    "count": 1
+  }
+}
