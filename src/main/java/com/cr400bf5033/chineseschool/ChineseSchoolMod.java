@@ -8,6 +8,7 @@ import com.cr400bf5033.chineseschool.registry.ModEntities;
 import com.cr400bf5033.chineseschool.registry.ModItems;
 import com.cr400bf5033.chineseschool.registry.ModMenus;
 import com.cr400bf5033.chineseschool.registry.ModSounds;
+import com.cr400bf5033.chineseschool.util.StartupNotice;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -47,6 +48,9 @@ public final class ChineseSchoolMod {
 
         // 游戏事件总线：交互处理（潜行手持书右键课桌时绕过原版的方块交互抑制）
         NeoForge.EVENT_BUS.addListener(DeskInteractionHandler::onRightClickBlock);
+
+        // 作者署名声明（仅在日志中输出，与模组功能无关）
+        StartupNotice.log(LOGGER);
 
         LOGGER.info("{} 已加载（Minecraft 26.3 / NeoForge）", MOD_NAME);
     }
