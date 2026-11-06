@@ -3,6 +3,7 @@ package com.cr400bf5033.chineseschool.registry;
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
 import com.cr400bf5033.chineseschool.block.BellBlock;
 import com.cr400bf5033.chineseschool.block.ChairBlock;
+import com.cr400bf5033.chineseschool.block.JiangtaiBlock;
 import com.cr400bf5033.chineseschool.block.DeskBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -48,6 +49,14 @@ public final class ModBlocks {
                     .mapColor(MapColor.COLOR_GRAY)
                     .strength(2.0F, 3.0F)
                     .sound(SoundType.METAL)
+                    .noOcclusion());
+
+    /** 讲台：2 格宽的多方块结构，27 格容器。 */
+    public static final DeferredBlock<JiangtaiBlock> JIANGTAI = BLOCKS.registerBlock("jiangtai", JiangtaiBlock::new,
+            properties -> properties
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5F, 3.0F)
+                    .sound(SoundType.WOOD)
                     .noOcclusion());
 
     private ModBlocks() {

@@ -3,6 +3,7 @@ package com.cr400bf5033.chineseschool.client;
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
 import com.cr400bf5033.chineseschool.client.renderer.ChairSeatRenderer;
 import com.cr400bf5033.chineseschool.client.screen.DeskScreen;
+import com.cr400bf5033.chineseschool.client.screen.JiangtaiScreen;
 import com.cr400bf5033.chineseschool.registry.ModEntities;
 import com.cr400bf5033.chineseschool.registry.ModMenus;
 import net.minecraft.client.Minecraft;
@@ -33,6 +34,7 @@ public final class ChineseSchoolClient {
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenus.DESK.get(), DeskScreen::new);
+        event.register(ModMenus.JIANGTAI.get(), JiangtaiScreen::new);
     }
 
     /** 注册实体渲染器（座位实体本身不可见，用空渲染器）。 */

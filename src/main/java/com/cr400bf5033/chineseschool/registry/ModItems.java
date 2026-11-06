@@ -32,6 +32,10 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> BELL = ITEMS.registerItem("bell",
             properties -> new BlockItem(ModBlocks.BELL.get(), properties));
 
+    /** 讲台的物品形式。 */
+    public static final DeferredItem<BlockItem> JIANGTAI = ITEMS.registerItem("jiangtai",
+            properties -> new BlockItem(ModBlocks.JIANGTAI.get(), properties));
+
     private ModItems() {
     }
 }

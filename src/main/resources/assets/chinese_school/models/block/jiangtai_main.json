@@ -1,0 +1,561 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "minecraft:block/stripped_oak_log",
+    "stripped_oak_log": "minecraft:block/stripped_oak_log"
+  },
+  "elements": [
+    {
+      "name": "jiangtai_main_0",
+      "from": [
+        0.0,
+        18,
+        0
+      ],
+      "to": [
+        16.0,
+        20,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            -4,
+            16.0,
+            -2
+          ]
+        },
+        "south": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            -4,
+            16.0,
+            -2
+          ]
+        },
+        "east": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0,
+            -4,
+            16,
+            -2
+          ]
+        },
+        "west": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0,
+            -4,
+            16,
+            -2
+          ]
+        },
+        "up": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            0,
+            16.0,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            0,
+            16.0,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "jiangtai_main_1",
+      "from": [
+        0.0,
+        20,
+        0
+      ],
+      "to": [
+        16.0,
+        22,
+        1.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            -6,
+            16.0,
+            -4
+          ]
+        },
+        "south": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            -6,
+            16.0,
+            -4
+          ]
+        },
+        "east": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0,
+            -6,
+            1.5,
+            -4
+          ]
+        },
+        "west": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0,
+            -6,
+            1.5,
+            -4
+          ]
+        },
+        "up": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            0,
+            16.0,
+            1.5
+          ]
+        },
+        "down": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            0,
+            16.0,
+            1.5
+          ]
+        }
+      }
+    },
+    {
+      "name": "jiangtai_main_2",
+      "from": [
+        14.5,
+        20,
+        1.5
+      ],
+      "to": [
+        16.0,
+        21,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.5,
+            -5,
+            16.0,
+            -4
+          ]
+        },
+        "south": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.5,
+            -5,
+            16.0,
+            -4
+          ]
+        },
+        "east": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            1.5,
+            -5,
+            16,
+            -4
+          ]
+        },
+        "west": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            1.5,
+            -5,
+            16,
+            -4
+          ]
+        },
+        "up": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.5,
+            1.5,
+            16.0,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.5,
+            1.5,
+            16.0,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "jiangtai_main_3",
+      "from": [
+        14.0,
+        0,
+        15
+      ],
+      "to": [
+        16.0,
+        15,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.0,
+            1,
+            16.0,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.0,
+            1,
+            16.0,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            15,
+            1,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            15,
+            1,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.0,
+            15,
+            16.0,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.0,
+            15,
+            16.0,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "jiangtai_main_4",
+      "from": [
+        0.0,
+        0,
+        0
+      ],
+      "to": [
+        16.0,
+        18,
+        1.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            -2,
+            16.0,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            -2,
+            16.0,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0,
+            -2,
+            1.5,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0,
+            -2,
+            1.5,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            0,
+            16.0,
+            1.5
+          ]
+        },
+        "down": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            0,
+            16.0,
+            1.5
+          ]
+        }
+      }
+    },
+    {
+      "name": "jiangtai_main_5",
+      "from": [
+        0.0,
+        10,
+        1.5
+      ],
+      "to": [
+        14.0,
+        11.5,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            4.5,
+            14.0,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            4.5,
+            14.0,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            1.5,
+            4.5,
+            14,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            1.5,
+            4.5,
+            14,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            1.5,
+            14.0,
+            14
+          ]
+        },
+        "down": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            1.5,
+            14.0,
+            14
+          ]
+        }
+      }
+    },
+    {
+      "name": "jiangtai_main_6",
+      "from": [
+        0.0,
+        2,
+        1.5
+      ],
+      "to": [
+        14.0,
+        3.5,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            12.5,
+            14.0,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            12.5,
+            14.0,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            1.5,
+            12.5,
+            14,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            1.5,
+            12.5,
+            14,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            1.5,
+            14.0,
+            14
+          ]
+        },
+        "down": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            1.5,
+            14.0,
+            14
+          ]
+        }
+      }
+    },
+    {
+      "name": "jiangtai_main_7",
+      "from": [
+        14.0,
+        0,
+        1.5
+      ],
+      "to": [
+        16.0,
+        18,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.0,
+            -2,
+            16.0,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.0,
+            -2,
+            16.0,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            1.5,
+            -2,
+            15,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            1.5,
+            -2,
+            15,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.0,
+            1.5,
+            16.0,
+            15
+          ]
+        },
+        "down": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            14.0,
+            1.5,
+            16.0,
+            15
+          ]
+        }
+      }
+    }
+  ]
+}

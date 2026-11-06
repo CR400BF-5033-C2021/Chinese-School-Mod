@@ -2,6 +2,7 @@ package com.cr400bf5033.chineseschool.registry;
 
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
 import com.cr400bf5033.chineseschool.menu.DeskMenu;
+import com.cr400bf5033.chineseschool.menu.JiangtaiMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
@@ -19,6 +20,10 @@ public final class ModMenus {
     /** 课桌容器菜单。 */
     public static final DeferredHolder<MenuType<?>, MenuType<DeskMenu>> DESK =
             MENUS.register("desk", () -> IMenuTypeExtension.create(DeskMenu::new));
+
+    /** 讲台容器菜单（27 格）。 */
+    public static final DeferredHolder<MenuType<?>, MenuType<JiangtaiMenu>> JIANGTAI =
+            MENUS.register("jiangtai", () -> IMenuTypeExtension.create(JiangtaiMenu::new));
 
     private ModMenus() {
     }
