@@ -146,12 +146,12 @@
     {
       "name": "jiangtai_main_2",
       "from": [
-        14.5,
+        0.0,
         20,
         1.5
       ],
       "to": [
-        16.0,
+        1.5,
         21,
         16
       ],
@@ -159,18 +159,18 @@
         "north": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.5,
+            0.0,
             -5,
-            16.0,
+            1.5,
             -4
           ]
         },
         "south": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.5,
+            0.0,
             -5,
-            16.0,
+            1.5,
             -4
           ]
         },
@@ -195,18 +195,18 @@
         "up": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.5,
+            0.0,
             1.5,
-            16.0,
+            1.5,
             16
           ]
         },
         "down": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.5,
+            0.0,
             1.5,
-            16.0,
+            1.5,
             16
           ]
         }
@@ -215,12 +215,81 @@
     {
       "name": "jiangtai_main_3",
       "from": [
-        14.0,
+        0.0,
+        0,
+        1.5
+      ],
+      "to": [
+        2.0,
+        18,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            -2,
+            2.0,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            -2,
+            2.0,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            1.5,
+            -2,
+            15,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            1.5,
+            -2,
+            15,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            1.5,
+            2.0,
+            15
+          ]
+        },
+        "down": {
+          "texture": "#stripped_oak_log",
+          "uv": [
+            0.0,
+            1.5,
+            2.0,
+            15
+          ]
+        }
+      }
+    },
+    {
+      "name": "jiangtai_main_4",
+      "from": [
+        0.0,
         0,
         15
       ],
       "to": [
-        16.0,
+        2.0,
         15,
         16
       ],
@@ -228,18 +297,18 @@
         "north": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.0,
+            0.0,
             1,
-            16.0,
+            2.0,
             16
           ]
         },
         "south": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.0,
+            0.0,
             1,
-            16.0,
+            2.0,
             16
           ]
         },
@@ -264,25 +333,25 @@
         "up": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.0,
+            0.0,
             15,
-            16.0,
+            2.0,
             16
           ]
         },
         "down": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.0,
+            0.0,
             15,
-            16.0,
+            2.0,
             16
           ]
         }
       }
     },
     {
-      "name": "jiangtai_main_4",
+      "name": "jiangtai_main_5",
       "from": [
         0.0,
         0,
@@ -351,14 +420,14 @@
       }
     },
     {
-      "name": "jiangtai_main_5",
+      "name": "jiangtai_main_6",
       "from": [
-        0.0,
+        2.0,
         10,
         1.5
       ],
       "to": [
-        14.0,
+        16.0,
         11.5,
         14
       ],
@@ -366,18 +435,18 @@
         "north": {
           "texture": "#stripped_oak_log",
           "uv": [
-            0.0,
+            2.0,
             4.5,
-            14.0,
+            16.0,
             6
           ]
         },
         "south": {
           "texture": "#stripped_oak_log",
           "uv": [
-            0.0,
+            2.0,
             4.5,
-            14.0,
+            16.0,
             6
           ]
         },
@@ -402,87 +471,18 @@
         "up": {
           "texture": "#stripped_oak_log",
           "uv": [
-            0.0,
+            2.0,
             1.5,
-            14.0,
+            16.0,
             14
           ]
         },
         "down": {
           "texture": "#stripped_oak_log",
           "uv": [
-            0.0,
+            2.0,
             1.5,
-            14.0,
-            14
-          ]
-        }
-      }
-    },
-    {
-      "name": "jiangtai_main_6",
-      "from": [
-        0.0,
-        2,
-        1.5
-      ],
-      "to": [
-        14.0,
-        3.5,
-        14
-      ],
-      "faces": {
-        "north": {
-          "texture": "#stripped_oak_log",
-          "uv": [
-            0.0,
-            12.5,
-            14.0,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#stripped_oak_log",
-          "uv": [
-            0.0,
-            12.5,
-            14.0,
-            14
-          ]
-        },
-        "east": {
-          "texture": "#stripped_oak_log",
-          "uv": [
-            1.5,
-            12.5,
-            14,
-            14
-          ]
-        },
-        "west": {
-          "texture": "#stripped_oak_log",
-          "uv": [
-            1.5,
-            12.5,
-            14,
-            14
-          ]
-        },
-        "up": {
-          "texture": "#stripped_oak_log",
-          "uv": [
-            0.0,
-            1.5,
-            14.0,
-            14
-          ]
-        },
-        "down": {
-          "texture": "#stripped_oak_log",
-          "uv": [
-            0.0,
-            1.5,
-            14.0,
+            16.0,
             14
           ]
         }
@@ -491,68 +491,68 @@
     {
       "name": "jiangtai_main_7",
       "from": [
-        14.0,
-        0,
+        2.0,
+        2,
         1.5
       ],
       "to": [
         16.0,
-        18,
-        15
+        3.5,
+        14
       ],
       "faces": {
         "north": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.0,
-            -2,
+            2.0,
+            12.5,
             16.0,
-            16
+            14
           ]
         },
         "south": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.0,
-            -2,
+            2.0,
+            12.5,
             16.0,
-            16
+            14
           ]
         },
         "east": {
           "texture": "#stripped_oak_log",
           "uv": [
             1.5,
-            -2,
-            15,
-            16
+            12.5,
+            14,
+            14
           ]
         },
         "west": {
           "texture": "#stripped_oak_log",
           "uv": [
             1.5,
-            -2,
-            15,
-            16
+            12.5,
+            14,
+            14
           ]
         },
         "up": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.0,
+            2.0,
             1.5,
             16.0,
-            15
+            14
           ]
         },
         "down": {
           "texture": "#stripped_oak_log",
           "uv": [
-            14.0,
+            2.0,
             1.5,
             16.0,
-            15
+            14
           ]
         }
       }

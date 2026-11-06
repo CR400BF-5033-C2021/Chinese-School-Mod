@@ -2,33 +2,33 @@
   "variants": {
     "facing=east,part=extra": {
       "model": "chinese_school:block/jiangtai_extra",
-      "y": 90
+      "y": 270
     },
     "facing=east,part=main": {
       "model": "chinese_school:block/jiangtai_main",
-      "y": 90
+      "y": 270
     },
     "facing=north,part=extra": {
-      "model": "chinese_school:block/jiangtai_extra"
-    },
-    "facing=north,part=main": {
-      "model": "chinese_school:block/jiangtai_main"
-    },
-    "facing=south,part=extra": {
       "model": "chinese_school:block/jiangtai_extra",
       "y": 180
     },
-    "facing=south,part=main": {
+    "facing=north,part=main": {
       "model": "chinese_school:block/jiangtai_main",
       "y": 180
+    },
+    "facing=south,part=extra": {
+      "model": "chinese_school:block/jiangtai_extra"
+    },
+    "facing=south,part=main": {
+      "model": "chinese_school:block/jiangtai_main"
     },
     "facing=west,part=extra": {
       "model": "chinese_school:block/jiangtai_extra",
-      "y": 270
+      "y": 90
     },
     "facing=west,part=main": {
       "model": "chinese_school:block/jiangtai_main",
-      "y": 270
+      "y": 90
     }
   }
 }
