@@ -19,6 +19,9 @@ displayName="${mod_name}"
 
 authors="${mod_authors}"
 
+# 模组列表图标（放在 jar 根目录）
+logoFile="chinese_school.png"
+
 #credit=""
 
 description='''
