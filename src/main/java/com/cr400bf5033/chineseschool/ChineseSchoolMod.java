@@ -1,6 +1,7 @@
 package com.cr400bf5033.chineseschool;
 
 import com.cr400bf5033.chineseschool.event.DeskInteractionHandler;
+import com.cr400bf5033.chineseschool.network.BanpaiTextPayload;
 import com.cr400bf5033.chineseschool.registry.ModBlockEntities;
 import com.cr400bf5033.chineseschool.registry.ModBlocks;
 import com.cr400bf5033.chineseschool.registry.ModCreativeModeTabs;
@@ -14,6 +15,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.slf4j.Logger;
 
 /**
@@ -29,6 +31,11 @@ public final class ChineseSchoolMod {
 
     /** 模组 ID，必须与 gradle.properties 中的 mod_id 以及 neoforge.mods.toml 保持一致。 */
     public static final String MOD_ID = "chinese_school";
+
+    /** 注册自定义网络包。 */
+    private static void registerPayloads(RegisterPayloadHandlersEvent event) {
+        event.registrar("1").playToServer(BanpaiTextPayload.TYPE, BanpaiTextPayload.CODEC, BanpaiTextPayload::handle);
+    }
 
     /** 模组显示名称。 */
     public static final String MOD_NAME = "Chinese School Mod";
@@ -48,6 +55,9 @@ public final class ChineseSchoolMod {
 
         // 游戏事件总线：交互处理（潜行手持书右键课桌时绕过原版的方块交互抑制）
         NeoForge.EVENT_BUS.addListener(DeskInteractionHandler::onRightClickBlock);
+
+        // 网络包
+        modEventBus.addListener(ChineseSchoolMod::registerPayloads);
 
         // 作者署名声明（仅在日志中输出，与模组功能无关）
         StartupNotice.log(LOGGER);

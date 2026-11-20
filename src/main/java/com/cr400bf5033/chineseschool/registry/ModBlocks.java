@@ -1,6 +1,7 @@
 package com.cr400bf5033.chineseschool.registry;
 
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
+import com.cr400bf5033.chineseschool.block.BanpaiBlock;
 import com.cr400bf5033.chineseschool.block.BellBlock;
 import com.cr400bf5033.chineseschool.block.ChairBlock;
 import com.cr400bf5033.chineseschool.block.JiangtaiBlock;
@@ -49,6 +50,14 @@ public final class ModBlocks {
                     .mapColor(MapColor.COLOR_GRAY)
                     .strength(2.0F, 3.0F)
                     .sound(SoundType.METAL)
+                    .noOcclusion());
+
+    /** 班牌：壁挂式班级牌，右键编辑班级名称。 */
+    public static final DeferredBlock<BanpaiBlock> BANPAI = BLOCKS.registerBlock("banpai", BanpaiBlock::new,
+            properties -> properties
+                    .mapColor(MapColor.COLOR_BLUE)
+                    .strength(1.0F, 2.0F)
+                    .sound(SoundType.WOOD)
                     .noOcclusion());
 
     /** 讲台：2 格宽的多方块结构，27 格容器。 */

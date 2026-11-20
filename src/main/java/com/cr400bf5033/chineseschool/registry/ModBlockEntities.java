@@ -1,6 +1,7 @@
 package com.cr400bf5033.chineseschool.registry;
 
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
+import com.cr400bf5033.chineseschool.block.BanpaiBlockEntity;
 import com.cr400bf5033.chineseschool.block.BellBlockEntity;
 import com.cr400bf5033.chineseschool.block.DeskBlockEntity;
 import com.cr400bf5033.chineseschool.block.JiangtaiBlockEntity;
@@ -24,6 +25,10 @@ public final class ModBlockEntities {
     /** 电铃的方块实体（负责上下课铃声循环）。 */
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BellBlockEntity>> BELL =
             BLOCK_ENTITIES.register("bell", () -> new BlockEntityType<>(BellBlockEntity::new, ModBlocks.BELL.get()));
+
+    /** 班牌的方块实体（保存并同步班级名称）。 */
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BanpaiBlockEntity>> BANPAI =
+            BLOCK_ENTITIES.register("banpai", () -> new BlockEntityType<>(BanpaiBlockEntity::new, ModBlocks.BANPAI.get()));
 
     /** 讲台的方块实体（27 格容器，只挂在主块上）。 */
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<JiangtaiBlockEntity>> JIANGTAI =

@@ -9,5 +9,8 @@
   "item.chinese_school.bell": "Electric Bell",
   "block.chinese_school.jiangtai": "Lectern Desk",
   "item.chinese_school.jiangtai": "Lectern Desk",
+  "block.chinese_school.banpai": "Class Sign",
+  "item.chinese_school.banpai": "Class Sign",
+  "container.chinese_school.banpai": "Class Sign",
   "container.chinese_school.jiangtai": "Lectern Desk"
 }

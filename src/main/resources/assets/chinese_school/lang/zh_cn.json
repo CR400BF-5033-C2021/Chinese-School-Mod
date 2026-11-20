@@ -9,5 +9,8 @@
   "item.chinese_school.bell": "电铃",
   "block.chinese_school.jiangtai": "讲台",
   "item.chinese_school.jiangtai": "讲台",
+  "block.chinese_school.banpai": "班牌",
+  "item.chinese_school.banpai": "班牌",
+  "container.chinese_school.banpai": "班牌",
   "container.chinese_school.jiangtai": "讲台"
 }

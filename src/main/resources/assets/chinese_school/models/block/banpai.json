@@ -1,0 +1,148 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "chinese_school:block/banpai",
+    "face": "chinese_school:block/banpai",
+    "trim": "minecraft:block/stripped_oak_log"
+  },
+  "elements": [
+    {
+      "name": "plate",
+      "from": [
+        3,
+        1,
+        7
+      ],
+      "to": [
+        13,
+        15,
+        9
+      ],
+      "faces": {
+        "north": {
+          "texture": "#face",
+          "uv": [
+            0,
+            0,
+            10,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#face",
+          "uv": [
+            10,
+            0,
+            16,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#face",
+          "uv": [
+            0,
+            0,
+            10,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#face",
+          "uv": [
+            10,
+            0,
+            16,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#face",
+          "uv": [
+            10,
+            0,
+            16,
+            2
+          ]
+        },
+        "down": {
+          "texture": "#face",
+          "uv": [
+            10,
+            0,
+            16,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "name": "wood_trim",
+      "from": [
+        1.2,
+        1.0,
+        6.8
+      ],
+      "to": [
+        3.05,
+        15.0,
+        9.2
+      ],
+      "faces": {
+        "north": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            2,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            2,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            2.4,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            2.4,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            2,
+            2.4
+          ]
+        },
+        "down": {
+          "texture": "#trim",
+          "uv": [
+            0,
+            0,
+            2,
+            2.4
+          ]
+        }
+      }
+    }
+  ]
+}

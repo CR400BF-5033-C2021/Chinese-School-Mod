@@ -1,9 +1,11 @@
 package com.cr400bf5033.chineseschool.client;
 
 import com.cr400bf5033.chineseschool.ChineseSchoolMod;
+import com.cr400bf5033.chineseschool.client.renderer.BanpaiRenderer;
 import com.cr400bf5033.chineseschool.client.renderer.ChairSeatRenderer;
 import com.cr400bf5033.chineseschool.client.screen.DeskScreen;
 import com.cr400bf5033.chineseschool.client.screen.JiangtaiScreen;
+import com.cr400bf5033.chineseschool.registry.ModBlockEntities;
 import com.cr400bf5033.chineseschool.registry.ModEntities;
 import com.cr400bf5033.chineseschool.registry.ModMenus;
 import net.minecraft.client.Minecraft;
@@ -41,6 +43,7 @@ public final class ChineseSchoolClient {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.CHAIR_SEAT.get(), ChairSeatRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.BANPAI.get(), ctx -> new BanpaiRenderer(ctx));
     }
 
     @SubscribeEvent
