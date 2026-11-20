@@ -49,7 +49,6 @@ public class BanpaiRenderer implements BlockEntityRenderer<BanpaiBlockEntity, Ba
         if (state.text == null || state.text.isEmpty()) {
             return;
         }
-        FormattedCharSequence sequence = FormattedCharSequence.forward(state.text, Style.EMPTY);
         Font font = Minecraft.getInstance().font;
 
         pose.pushPose();
@@ -57,12 +56,19 @@ public class BanpaiRenderer implements BlockEntityRenderer<BanpaiBlockEntity, Ba
         pose.translate(0.5F, 0.5F, 0.5F);
         pose.mulPose(new org.joml.Matrix4f().rotateY((float) Math.toRadians(-state.facing.toYRot())));
         pose.translate(0.0F, 0.0F, -0.0625F);
-        float scale = 0.0075F;
+        float scale = 0.009F;
         pose.scale(-scale, -scale, scale);
 
-        float width = font.width(sequence);
-        collector.submitText(pose, -width / 2.0F, -font.lineHeight / 2.0F, sequence,
-                false, Font.DisplayMode.NORMAL, state.lightCoords, 0xFFFFFFFF, 0, 0);
+        // 竖排：一个字一行，整体垂直居中
+        String text = state.text;
+        float lineHeight = font.lineHeight;
+        float totalHeight = text.length() * lineHeight;
+        for (int i = 0; i < text.length(); i++) {
+            FormattedCharSequence piece = FormattedCharSequence.forward(String.valueOf(text.charAt(i)), Style.EMPTY);
+            float width = font.width(piece);
+            collector.submitText(pose, -width / 2.0F, i * lineHeight - totalHeight / 2.0F, piece,
+                    false, Font.DisplayMode.NORMAL, state.lightCoords, 0xFF000000, 0, 0);
+        }
         pose.popPose();
     }
 }
