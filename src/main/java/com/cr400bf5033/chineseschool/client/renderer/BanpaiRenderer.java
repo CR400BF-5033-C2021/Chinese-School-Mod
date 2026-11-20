@@ -55,7 +55,9 @@ public class BanpaiRenderer implements BlockEntityRenderer<BanpaiBlockEntity, Ba
         // 移到方块中心，再按朝向旋转，最后贴到牌面前方
         pose.translate(0.5F, 0.5F, 0.5F);
         pose.mulPose(new org.joml.Matrix4f().rotateY((float) Math.toRadians(-state.facing.toYRot())));
-        pose.translate(0.0F, 0.0F, -0.0625F);
+        // 牌面垂直于墙面：再转 90 度，贴到板面外侧
+        pose.mulPose(new org.joml.Matrix4f().rotateY((float) Math.toRadians(90.0)));
+        pose.translate(0.0F, 0.0F, -0.063F);
         float scale = 0.009F;
         pose.scale(-scale, -scale, scale);
 
